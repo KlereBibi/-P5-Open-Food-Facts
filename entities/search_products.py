@@ -1,5 +1,5 @@
 import requests
-from constant import category
+from constant import CATEGORY #majuscule
 
 
 class search_product:
@@ -8,16 +8,16 @@ class search_product:
 
         self.category_dict_list = []
 
-    def pouet(self):
-        for element in category:
-            r = requests.get("https://fr.openfoodfacts.org/categorie/{}.json".format(element), auth=('user', 'pass'))
-            self.category_dict_list.append({ element : r.text })
+    def search_in_openfood(self):
+        for element in CATEGORY:
+            r = requests.get("https://fr.openfoodfacts.org/categorie/{}.json".format(element))#non -> pas bon endpoint -> permets de préciser combien de produits
+            self.category_dict_list.append({ element : r })#url qui va pas juste 
     
-    def print(self):
+    def print_search_result(self):
         for element in self.category_dict_list:
             print(element)
 
 chouette = search_product()
-chouette.pouet()
-chouette.print()
+chouette.search_in_openfood()
+chouette.print_search_result()
 
