@@ -1,6 +1,6 @@
 import requests, json 
-from product import Product
-from productmanager import ProductManager
+from entities.product import Product
+from entities.productmanager import ProductManager
 """requests : permet d'envoyer une requête GET à l'API"""
 """json : sera utiliser avec json.loads pour deserialiser le texte contenant du json vers un objet Python en utilisant une table de conversion"""
 
@@ -51,17 +51,10 @@ class ApiManager:
         for element in self.search_prod():
             for item in element:
                 newprod = Product(item['product_name_fr'], item['nutriscore_grade'], item['categories'])
-                newprod.split_cat() #est ce que cest au bon endroit 
                 my_list_prod.append(newprod)    
-        
         return my_list_prod
     
-    def data_cate(self):
-
-        """initialise la class product manager: reçoit, trie et créer les objets categories et ensuite les enrgistre en appelant la class catgories manager"""
-
-        prodmana = ProductManager()
-        prodmana.creat_cate(self.creat_prod())
+    # Hey product manager, ca va bien? tiens je te file une liste de produits enregistre les dans la base STP
         
 
 
