@@ -1,31 +1,12 @@
+from category import Category
+from categorymanager import CategoryManager
 
 class ProductManager:
 
-    def search_all_categories(self, products):
+    def __init__(self):
 
-        mysecondlist = []
-        category = []
-        mylist = []
-
-        for element in products: #la liste des products 
-            mylist.append(element["categories"])
-
-        for element in mylist: #séparer les chaines de caractère, sort sous forme de listes
-            a = element.split(',')
-            mysecondlist.append(a)
-
-        for element in mysecondlist: # itérer sur chaque élement pour l'ajouter dans la liste des catégories sans doublon
-            for i in element:
-                if i not in category:
-                    category.append(i)
-
-        print(category)
-        return category
-
-    def creat_category(self, products):
-
-        for element in self.search_all_categories(products): #création de l'objet
-            print(type(element))
-            element = type("", (), {})
-            print(type(element))
-        
+        a = 0
+    
+    
+# Hey, tu ma file une liste de prodiuits a enregistrer c'est cool :) par contre ces produits contiennent des categories mais pas d'ID ca veut dire qu'ils sont tout neuf
+# Du coup je vais demander a mon pote categorie manager d'enregistrer ces categories en base d'abord et ensuite je vais enregistrer les produits

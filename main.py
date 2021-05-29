@@ -1,11 +1,18 @@
+0
 #encoding:utf-8
 from entities.ApiManager import ApiManager
 from entities.productmanager import ProductManager
 
 apimanager = ApiManager()
-products = apimanager.search_products()
+
+listproduct = apimanager.creat_product()
+
 productmanager = ProductManager()
-category = productmanager.creat_category(products) 
+
+productmanager.data_product(listproduct)
+
+
+
 
 
 

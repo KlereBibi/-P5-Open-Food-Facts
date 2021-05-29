@@ -1,8 +1,6 @@
-
-
-class Brands:
-
+class Category:
+    
     def __init__(self, name):
 
         self.id = None
-        self.name = name 
+        self.name = name
