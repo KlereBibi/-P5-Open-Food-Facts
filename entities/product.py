@@ -1,21 +1,21 @@
+from category import Category
+
+
 class Product:
 
     """class permettant d'initalisé les objets products"""
 
-    def __init__(self, name, nutriscore, cat):
-        self.id = None
+    def __init__(self, name, nutriscore, categories_list, id=None):
+        self.id = id
         self.name = name
         self.nutriscore = nutriscore
-        self.categories = cat
-        self.list_cat_split= [] #je n'ai pas réussis à modifier directement categories
+        self.categories = categories_list
         self.url = None
+        if id is None:
+            self.split_cat()
 
     def split_cat(self):
-
-        """méthode permettant de spliter le retour de chaine de caractère des categories"""
-        
-        self.list_cat_split = self.categories.split(',') #todo
-        
-     
+        list_cat_split = self.categories.split(',')
+        self.categories = [Category(x) for x in list_cat_split]
 
   
