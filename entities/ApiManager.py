@@ -57,7 +57,7 @@ class ApiManager:
     def call_promana(self):
 
         promana = ProductManager()
-        promana.data_cate(self.creat_prod())
+        promana.change_tup(self.creat_prod())
 
 a = ApiManager()
 a.call_promana()
