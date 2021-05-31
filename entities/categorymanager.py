@@ -24,4 +24,5 @@ class CategoryManager:
         #valider la transaction
         db.commit()
         #afficher le nombre de lignes insérées
+      
         print(cur.rowcount, "ligne insérée.")
