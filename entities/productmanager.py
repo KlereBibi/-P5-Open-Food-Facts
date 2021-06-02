@@ -1,5 +1,5 @@
 from category import Category
-from categorymanager import CategoryManager
+#from categorymanager import CategoryManager
 import mysql.connector
 
 class ProductManager:
@@ -15,7 +15,7 @@ class ProductManager:
 
     def save_product(self, list):
     
-        a = self.change_tup(list)
+        list_tup_prod = self.change_tup(list)
         
         #connexion au base de données
         db = mysql.connector.connect(
@@ -29,7 +29,7 @@ class ProductManager:
 
         sql = "INSERT INTO products (id, name, category, nutriscore, url) VALUES (%s, %s, %s, %s, %s)"
 
-        value = a 
+        value = list_tup_prod
 
         cur.executemany(sql, value)
         

@@ -5,12 +5,12 @@ class Product:
 
     """class permettant d'initalisé les objets products"""
 
-    def __init__(self, name, nutriscore, categories_list, id=None):
+    def __init__(self, name, nutriscore, categories_list, url, id=None, ):
         self.id = id
         self.name = name
         self.nutriscore = nutriscore
         self.categories = categories_list
-        self.url = None
+        self.url = url
         if id is None:
             self.split_cat()
 
