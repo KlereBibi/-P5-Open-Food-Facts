@@ -1,22 +1,26 @@
 from category import Category
-#from categorymanager import CategoryManager
+from categorymanager import CategoryManager
 import mysql.connector
 
 class ProductManager:
 
 
-    def change_tup(self,list):
-
-        list_tup = []
-        for element in list:
-            list_tup.append((None, element.name, "a", element.nutriscore, "b"))
-        
-        return list_tup
-
     def save_product(self, list):
-    
-        list_tup_prod = self.change_tup(list)
         
+        #aobjet categorie manager appelé 
+        categomanager = CategoryManager()
+
+        #creation de liste de tuple
+        list_tup_prod = []
+
+        #transformation en tuples
+        for element in list: 
+            list_tup_prod.append((None, element.name, element.nutriscore, element.url))
+            for catego in element.categories:
+                categomanager.save_catego_tup(catego)
+
+        categomanager.save_catego_table()
+
         #connexion au base de données
         db = mysql.connector.connect(
             host = "localhost",
@@ -27,7 +31,7 @@ class ProductManager:
         #créer un curseur de base de données pour effectuer des opérations SQL
         cur = db.cursor()
 
-        sql = "INSERT INTO products (id, name, category, nutriscore, url) VALUES (%s, %s, %s, %s, %s)"
+        sql = "INSERT INTO products (id, name, nutriscore, url) VALUES (%s, %s, %s, %s)"
 
         value = list_tup_prod
 
@@ -39,6 +43,4 @@ class ProductManager:
         #afficher le nombre de lignes insérées
         print(cur.rowcount, "ligne insérée.")
 
-        
-# Hey, tu ma file une liste de prodiuits a enregistrer c'est cool :) par contre ces produits contiennent des categories mais pas d'ID ca veut dire qu'ils sont tout neuf
-# Du coup je vais demander a mon pote categorie manager d'enregistrer ces categories en base d'abord et ensuite je vais enregistrer les produits
+ 

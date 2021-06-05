@@ -1,6 +1,6 @@
 import requests, json 
 from product import Product
-#from productmanager import ProductManager
+from productmanager import ProductManager
 """requests : permet d'envoyer une requête GET à l'API"""
 """json : sera utiliser avec json.loads pour deserialiser le texte contenant du json vers un objet Python en utilisant une table de conversion"""
 
@@ -52,22 +52,16 @@ class ApiManager:
             for item in element:
                 newprod = Product(item['product_name_fr'], item['nutriscore_grade'], item['categories'], item['url'])
                 my_list_prod.append(newprod)    
-        #return my_list_prod
-        for element in my_list_prod:
-            print(element.url)
+        
+        return my_list_prod
 
     def call_promana(self):
 
         promana = ProductManager()
-        promana.change_tup(self.creat_prod())
+        promana.save_product(self.creat_prod())
 
 a = ApiManager()
-a.creat_prod()
-#a.call_promana()
+a.call_promana()
 
     
-    # Hey product manager, ca va bien? tiens je te file une liste de produits enregistre les dans la base STP
-        
-
-
-
+   
