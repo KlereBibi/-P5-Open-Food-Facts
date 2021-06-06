@@ -58,7 +58,7 @@ class ApiManager:
     def call_promana(self):
 
         promana = ProductManager()
-        promana.save_product(self.creat_prod())
+        promana.save_in_table(self.creat_prod())
 
 a = ApiManager()
 a.call_promana()
