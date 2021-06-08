@@ -7,9 +7,6 @@ import mysql.connector
 
 class ProductManager:
 
-
-
-
     def save_product_tup(self, list):
         
         #creation de liste de tuple
@@ -21,7 +18,6 @@ class ProductManager:
             for catego in element.categories:
                 categomanager.list_tup_catego.append((None, catego.name))
         
-        categomanager.printlist()
         categomanager.save_catego_table()
 
         return list_tup_prod

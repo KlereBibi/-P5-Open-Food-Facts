@@ -18,4 +18,6 @@ class Product:
         list_cat_split = self.categories.split(',')
         self.categories = [Category(x) for x in list_cat_split]
 
+        
+
   
