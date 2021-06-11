@@ -1,20 +1,21 @@
 import mysql.connector
-from connexion import ConnexionOff
-from constante import REGISTERCATEGORIES
+from manager import Manager
 
-class CategoryManager:
-    
-    def __init__(self):
+class CategoryManager(Manager):
 
-        self.call_connexion = ConnexionOff()
-    
-        self.list_tup_catego = []
+    def save_catego_table(self, liste):
 
-    def save_catego_table(self):
+        """méthode enregistrant les catégories dans la base de donnée en appelant le constructeur de la classe mère"""
 
-        connex = ConnexionOff()
-        connex.save_table(REGISTERCATEGORIES, self.list_tup_catego)
+        super().__init__()
+       
+        sql = "INSERT IGNORE INTO categories (id, name) VALUES (%s, %s)"
         
-        
+        value = liste
 
-        
+        self.cur.executemany(sql, value)
+
+        self.connexion_off.commit()
+
+         #afficher le nombre de lignes insérées
+        print(self.cur.rowcount, "ligne insérée.")

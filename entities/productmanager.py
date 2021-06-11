@@ -1,31 +1,52 @@
 from category import Category
 from categorymanager import CategoryManager
-from constante import REGISTERCATEGORIES
-from constante import REGISTERPRODUCT
-from connexion import ConnexionOff
+from manager import Manager
 import mysql.connector
 
-class ProductManager:
+class ProductManager(Manager):
 
-    def save_product_tup(self, list):
+    def save_product_tup(self, liste):
         
+        """ méthode pour transformer les objets products en tuples. 
+        initialisation de l'objet category manager pour ajouter dans la liste du constructeur les tuples des categories
+        appel de la fonction pour enregistrer les catégories 
+        return la liste de tuples """
+
         #creation de liste de tuple
+        list_tup_catego = []
         list_tup_prod = []
         categomanager = CategoryManager()
         #transformation en tuples
-        for element in list: 
+        for element in liste: 
             list_tup_prod.append((None, element.name, element.nutriscore, element.url))
             for catego in element.categories:
-                categomanager.list_tup_catego.append((None, catego.name))
+                list_tup_catego.append((None, catego.name))
+                #A REVOIR !!!!!!! une requête pour chaque product ou une requête global?
         
-        categomanager.save_catego_table()
+        categomanager.save_catego_table(list_tup_catego)
 
         return list_tup_prod
 
-    def save_in_table(self, list):
+    def save_in_table(self, liste):
 
-        connex = ConnexionOff()
+        """méthode enregistrant la liste des produits dans la base off en appelant la class mère"""
 
-        connex.save_table(REGISTERPRODUCT, self.save_product_tup(list))
+        products_list = self.save_product_tup(liste)
+       
+        super().__init__() #constructeur de la class mère
+        
+        sql = "INSERT INTO products (id, name, nutriscore, url) VALUES (%s, %s, %s, %s)"
+
+        value = products_list
+
+        self.cur.executemany(sql, value)
+
+        self.connexion_off.commit()
+        
+        #afficher le nombre de lignes insérées
+        print(self.cur.rowcount, "ligne insérée.")
+
+
+        
         
  

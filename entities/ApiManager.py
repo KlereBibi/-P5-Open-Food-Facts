@@ -1,10 +1,11 @@
 import requests, json 
 from product import Product
 from productmanager import ProductManager
+from manager import Manager
 """requests : permet d'envoyer une requête GET à l'API"""
 """json : sera utiliser avec json.loads pour deserialiser le texte contenant du json vers un objet Python en utilisant une table de conversion"""
 
-class ApiManager:
+class ApiManager(Manager):
 
 
     """Création d'une class gérant la connexion à l'API d'open food fact"""
