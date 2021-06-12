@@ -1,5 +1,6 @@
 import mysql.connector
 from manager import Manager
+from categoryproductmanager import CategoryProductManager
 
 class CategoryManager(Manager):
 
@@ -19,3 +20,6 @@ class CategoryManager(Manager):
 
          #afficher le nombre de lignes insérées
         print(self.cur.rowcount, "ligne insérée.")
+
+    
+   

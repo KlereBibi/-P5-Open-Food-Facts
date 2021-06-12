@@ -47,6 +47,4 @@ class ProductManager(Manager):
         print(self.cur.rowcount, "ligne insérée.")
 
 
-        
-        
- 
+  

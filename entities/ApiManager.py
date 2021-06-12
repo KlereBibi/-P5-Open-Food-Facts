@@ -2,6 +2,7 @@ import requests, json
 from product import Product
 from productmanager import ProductManager
 from manager import Manager
+from categoryproduct import CategoryProduct
 """requests : permet d'envoyer une requête GET à l'API"""
 """json : sera utiliser avec json.loads pour deserialiser le texte contenant du json vers un objet Python en utilisant une table de conversion"""
 
@@ -60,6 +61,8 @@ class ApiManager(Manager):
 
         promana = ProductManager()
         promana.save_in_table(self.creat_prod())
+        categoprod = CategoryProduct()
+        categoprod = categoprod.liaison_id(self.creat_prod())
 
 a = ApiManager()
 a.call_promana()
