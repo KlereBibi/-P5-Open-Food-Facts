@@ -8,9 +8,10 @@ class CategoryManager(Manager):
 
         """méthode enregistrant les catégories dans la base de donnée en appelant le constructeur de la classe mère"""
 
+
         super().__init__()
-       
-        sql = "INSERT IGNORE INTO categories (id, name) VALUES (%s, %s)"
+    
+        sql = "INSERT INTO categories (id, name) VALUES (%s, %s) ON DUPLICATE KEY UPDATE name=name"
         
         value = liste
 
@@ -18,8 +19,10 @@ class CategoryManager(Manager):
 
         self.connexion_off.commit()
 
-         #afficher le nombre de lignes insérées
+        #afficher le nombre de lignes insérées
         print(self.cur.rowcount, "ligne insérée.")
+
+    
 
     
    

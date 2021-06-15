@@ -4,6 +4,9 @@ class CategoryProductManager(Manager):
 
     def take_id_product(self):
         
+
+        """récupération des id et noms des produits"""
+
         super().__init__()
 
         self.cur.execute("SELECT id, name FROM products")
@@ -13,6 +16,8 @@ class CategoryProductManager(Manager):
         return res
 
     def take_id_catego(self):
+
+        """récupération des id et nom des catégories"""
     
         super().__init__()
 
@@ -24,7 +29,8 @@ class CategoryProductManager(Manager):
 
     def save_liaison(self, liste_id):
 
-        
+        """enregistrement des tuples (id_products et id_categories correspondantes)"""
+
         super().__init__() #constructeur de la class mère
         
         sql = "INSERT INTO categories_products (id_products, id_categories) VALUES (%s, %s)"
