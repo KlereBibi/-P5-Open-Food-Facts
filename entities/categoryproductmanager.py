@@ -7,7 +7,6 @@ class CategoryProductManager(Manager):
 
         """récupération des id et noms des produits"""
 
-        super().__init__()
 
         self.cur.execute("SELECT id, name FROM products")
 
@@ -19,7 +18,6 @@ class CategoryProductManager(Manager):
 
         """récupération des id et nom des catégories"""
     
-        super().__init__()
 
         self.cur.execute("SELECT * FROM categories")
 

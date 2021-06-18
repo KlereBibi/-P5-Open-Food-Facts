@@ -33,7 +33,6 @@ class ProductManager(Manager):
 
         products_list = self.save_product_tup(liste)
        
-        super().__init__() #constructeur de la class mère
         
         sql = "INSERT INTO products (id, name, nutriscore, url) VALUES (%s, %s, %s, %s)"
 
