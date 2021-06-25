@@ -2,45 +2,20 @@ from manager import Manager
 
 class CategoryProductManager(Manager):
 
-    def take_id_product(self):
+    def save_bond_cp_table(self, liste_bonde):
         
+            """enregistre les catégories dans la base de donnée en appelant le constructeur de la classe mère"""
 
-        """récupération des id et noms des produits"""
+            sql = "INSERT INTO categories_products (id_products, id_categories) VALUES (%s, %s)"
+            
+            value = liste_bonde
 
+            self.cur.executemany(sql, value)
 
-        self.cur.execute("SELECT id, name FROM products")
+            self.connexion_off.commit()
 
-        res = self.cur.fetchall()
+            print(self.cur.rowcount, "ligne insérée.")
 
-        return res
+            """récupération des id des catégories en comparant avec la liste des catégories insérées"""
 
-    def take_id_catego(self):
-
-        """récupération des id et nom des catégories"""
-    
-
-        self.cur.execute("SELECT * FROM categories")
-
-        res = self.cur.fetchall()
-
-        return res
-
-    def save_liaison(self, liste_id):
-
-        """enregistrement des tuples (id_products et id_categories correspondantes)"""
-
-        super().__init__() #constructeur de la class mère
-        
-        sql = "INSERT INTO categories_products (id_products, id_categories) VALUES (%s, %s)"
-
-        value = liste_id
-
-        self.cur.executemany(sql, value)
-
-        self.connexion_off.commit()
-        
-        #afficher le nombre de lignes insérées
-        print(self.cur.rowcount, "ligne insérée.")
-
-        
-    
+       

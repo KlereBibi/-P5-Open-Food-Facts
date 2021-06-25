@@ -5,7 +5,7 @@ class Product:
 
     """class permettant d'initalisé les objets products"""
 
-    def __init__(self, name, nutriscore, categories_list, url, id=None, ):
+    def __init__(self, name, nutriscore, categories_list, url, id=None ):
         self.id = id
         self.name = name
         self.nutriscore = nutriscore

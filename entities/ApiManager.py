@@ -60,9 +60,8 @@ class ApiManager(Manager):
     def call_promana(self):
 
         promana = ProductManager()
-        promana.save_in_table(self.creat_prod())
-        #categoprod = CategoryProduct()
-        #categoprod = categoprod.liaison_id(self.creat_prod())
+        promana.bonde_id_catego_product(self.creat_prod())
+       
 
 a = ApiManager()
 a.call_promana()

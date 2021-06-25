@@ -1,6 +1,7 @@
 import mysql.connector
 from manager import Manager
-from categoryproductmanager import CategoryProductManager
+from category import Category
+#from categoryproductmanager import CategoryProductManager
 
 class CategoryManager(Manager):
 
@@ -18,24 +19,32 @@ class CategoryManager(Manager):
 
         print(self.cur.rowcount, "ligne insérée.")
 
+        self.cur.close()
+
+        self.cur = self.connexion_off.cursor()
+
         """récupération des id des catégories en comparant avec la liste des catégories insérées"""
 
         liste_name_catego = []
         for element in liste:
             liste_name_catego.append(element[1])
 
-        t = tuple(liste_name_catego)
-        query= "SELECT * FROM categories WHERE name IN {}".format(t)
-
-        self.cur.execute(query)
+        names = tuple(liste_name_catego)
+        query= (
+            "SELECT * FROM categories "
+            f"WHERE name IN ({', '.join('%s' for _ in names)})" #comprends pas tout
+        )
+        self.cur.execute(query, names)
     
         res = self.cur.fetchall()
-        
-        print(res)
 
-        #afficher le nombre de lignes insérées
-        
+        liste_o_catego_id = []
+        for element in res:
+            liste_o_catego_id.append(Category(element[1], element[0]))
 
+        return liste_o_catego_id
+
+        
         
     
 
