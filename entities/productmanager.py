@@ -1,7 +1,15 @@
 from category import Category
-from categorymanager import CategoryManager
 from manager import Manager
 from product import Product
+from brand import Brand
+from store import Store
+from storeproduct import StoreProduct
+from storeproductmanager import StoreProductManager
+from brandmanager import BrandManager
+from brandproduct import BrandProduct
+from brandproductmanager import BrandProductManager
+from storemanager import StoreManager
+from categorymanager import CategoryManager
 from categoryproduct import CategoryProduct
 from categoryproductmanager import CategoryProductManager
 import mysql.connector
@@ -39,6 +47,35 @@ class ProductManager(Manager):
         list_tup_id_catego = categomanager.save_catego_table(list_tup_catego)
 
         return list_tup_id_catego
+
+    def save_brands(self,liste):
+
+        brandmanager = BrandManager()
+
+        list_tup_brand = []
+    
+        for element in liste:
+            for brand in element.brands:
+                list_tup_brand.append((None, brand.name))
+        
+        list_tup_id_brands = brandmanager.save_brand_table(list_tup_brand)
+
+        return list_tup_id_brands
+
+
+    def save_stores(self, liste):
+
+        storemanager = StoreManager()
+
+        list_tup_store = []
+    
+        for element in liste:
+            for store in element.stores:
+                list_tup_store.append((None, store.name))
+        
+        list_tup_id_stores = storemanager.save_store_table(list_tup_store)
+
+        return list_tup_id_stores
 
     def save_in_table(self, liste):
 
@@ -78,7 +115,7 @@ class ProductManager(Manager):
         liste_o_product_id = []
 
         for element in res:
-            liste_o_product_id.append(Product(element[1], element[2], None, element[3], element[0]))
+            liste_o_product_id.append(Product(element[1], element[2], None, element[3], None, None, element[0]))
             
         return liste_o_product_id
         #la problématique : je peux avoir deux fois un même produit dans deux catégories différentes - 
@@ -86,25 +123,63 @@ class ProductManager(Manager):
     def bonde_id_catego_product(self, liste):
 
         liste_o_catego_id = self.save_catego(liste)
+
+
         liste_o_product_id = self.save_in_table(liste)
 
-        liste_o_bonde = []
 
-        for element in liste_o_product_id:
-            lobj = [x for x in liste if x.name == element.name]#liste des objets products correspondant au nom de l'élément
-            for each in lobj:
-                lobj2 = [x for x in each.categories]#liste des objets categories de chaque product
-                for i in lobj2:
-                    lobj3 = [x for x in liste_o_catego_id if x.name == i.name]#liste retournant les catégories 
-                    for e in lobj3:
-                        liste_o_bonde.append(CategoryProduct(element.id, e.id))#pour chaque obket dans la liste retournant le catégorie avec non none correspondant au product, ajoute dans la liste id_product avec _id categorie
 
-        liste_tup_bonde = []
+        liste_o_brand_id = self.save_brands(liste)
 
-        for element in liste_o_bonde:
-            liste_tup_bonde.append((element.id_product, element.id_categories))#transformation en tuple pour l'enregistrement dans une liste pour la requête
+
+        liste_o_store_id = self.save_stores(liste)
+
+        liste_o_bonde_procat = []
+
+        liste_o_bonde_probra = []
+
+        liste_o_bonde_prosto = []
+
+        for product in liste_o_product_id:#pour chauqe product dans la liste de produit avec des id numéroté 
+            non_saved_product = next(filter(lambda prod: prod.name == product.name, liste), None)#renvoie l'objet dans la liste d'objet python sans id numéroter avec le même nom avec true ou false
+            if non_saved_product: #si c est True (renvoie quelques choses)
+                for category in non_saved_product.categories:#pour la catégorie dans la liste de catégories de l'objet renvoyer
+                    saved_category = next(filter(lambda cat: cat.name == category.name, liste_o_catego_id), None)#renvoie l'objet correspondant à la liste des objet categorie avec id numéroté
+                    if saved_category: #si renvoie quelques choses
+                        liste_o_bonde_procat.append(CategoryProduct(product.id, saved_category.id)) #ajoute dans la liste (création d'objet categoryproduct)
+                for brand in non_saved_product.brands:
+                    saved_brands = next(filter(lambda bra: bra.name == brand.name, liste_o_brand_id), None)
+                    if saved_brands:
+                        liste_o_bonde_probra.append(BrandProduct(product.id, saved_brands.id))
+                for store in non_saved_product.stores:
+                    saved_stores = next(filter(lambda sto: sto.name == store.name, liste_o_store_id), None)
+                    if saved_stores:
+                        liste_o_bonde_prosto.append(StoreProduct(product.id, saved_stores.id))
+
+
+        liste_tup_bonde_procat = []
+        liste_tup_bonde_probra = []
+        liste_tup_bonde_prosto = []
+
+        for element in liste_o_bonde_procat:
+            liste_tup_bonde_procat.append((element.id_product, element.id_categories))#transformation en tuple pour l'enregistrement dans une liste pour la requête
 
         categoproductmana = CategoryProductManager()
 
-        categoproductmana.save_bond_cp_table(liste_tup_bonde)
-                    
+        categoproductmana.save_bond_cp_table(liste_tup_bonde_procat)
+        
+        for element in liste_o_bonde_probra:
+            liste_tup_bonde_probra.append((element.id_products, element.id_brands))
+        
+        brandpromana = BrandProductManager()
+
+        brandpromana.save_bond_bp_table(liste_tup_bonde_probra)
+
+        for element in liste_o_bonde_prosto:
+            liste_tup_bonde_prosto.append((element.id_products, element.id_stores))
+
+        storepromana = StoreProductManager()
+
+        storepromana.save_bond_sp_table(liste_tup_bonde_prosto)
+
+        

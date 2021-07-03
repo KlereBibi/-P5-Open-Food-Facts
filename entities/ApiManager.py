@@ -52,7 +52,7 @@ class ApiManager(Manager):
         my_list_prod = []
         for element in self.search_prod():
             for item in element:
-                newprod = Product(item['product_name_fr'], item['nutriscore_grade'], item['categories'], item['url'])
+                newprod = Product(item['product_name_fr'], item['nutriscore_grade'], item['categories'], item['url'], item['brands'], item['stores'])
                 my_list_prod.append(newprod)    
         
         return my_list_prod

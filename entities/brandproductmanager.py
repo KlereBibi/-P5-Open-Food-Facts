@@ -1,13 +1,12 @@
-import mysql.connector
 from manager import Manager
 
-class CategoryProductManager(Manager):
+class BrandProductManager(Manager):
 
-    def save_bond_cp_table(self, liste_bonde):
+    def save_bond_bp_table(self, liste_bonde):
         
             """enregistre les catégories dans la base de donnée en appelant le constructeur de la classe mère"""
 
-            sql = "INSERT INTO categories_products (id_products, id_categories) VALUES (%s, %s)"
+            sql = "INSERT INTO brands_products (id_products, id_brands) VALUES (%s, %s)"
             
             value = liste_bonde
 
@@ -17,6 +16,6 @@ class CategoryProductManager(Manager):
 
             print(self.cur.rowcount, "ligne insérée.")
 
-            """récupération des id des catégories en comparant avec la liste des catégories insérées"""
+            
 
        
