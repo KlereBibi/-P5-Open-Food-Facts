@@ -1,4 +1,3 @@
-
 class StoreProduct:
 
     def __init__(self, id_prod, id_sto ):

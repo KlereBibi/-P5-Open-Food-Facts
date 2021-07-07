@@ -1,6 +1,6 @@
-from category import Category
-from brand import Brand
-from store import Store
+from models.entities.category import Category
+from models.entities.brand import Brand 
+from models.entities.store import Store
 
 
 class Product:

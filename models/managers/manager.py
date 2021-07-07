@@ -8,14 +8,14 @@ class Manager:
 
         """constructeur de la classe avec les attributs de connexion à la base de donnée off & création du curseur"""
 
-        self.connexion_off = mysql.connector.connect(
+        self.connexion_database_off = mysql.connector.connect(
             host = "localhost",
             user = "root",
             password = "184300",
             database = "off"
         )
     
-        self.cur = self.connexion_off.cursor()
+        self.cursor = self.connexion_database_off.cursor()
 
         
 

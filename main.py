@@ -1,17 +1,9 @@
-0
+
 #encoding:utf-8
-from entities.ApiManager import ApiManager
-from entities.productmanager import ProductManager
+from models.managers.apimanager import ApiManager
 
-apimanager = ApiManager()
-
-listproduct = apimanager.creat_product()
-
-productmanager = ProductManager()
-
-productmanager.data_product(listproduct)
-
-
+save_data_openfoodfac = ApiManager()
+save_data_openfoodfac.save_in_database()
 
 
 

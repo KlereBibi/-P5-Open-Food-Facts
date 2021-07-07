@@ -1,4 +1,3 @@
-
 class Substitute:
 
     def __init__(self):

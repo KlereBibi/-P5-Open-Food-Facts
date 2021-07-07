@@ -1,4 +1,3 @@
-
 class BrandProduct:
 
     def __init__(self, id_pro, id_bra):
