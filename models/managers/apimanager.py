@@ -1,72 +1,58 @@
+"""this module queries the OpenFoodFac API and retrieves the targeted data. """
 
 import requests, json 
 from models.entities.product import Product
 from models.entities.categoryproduct import CategoryProduct
 from models.managers.manager import Manager
-from models.managers.productmanager import ProductManager
-
-
-"""requests : permet d'envoyer une requête GET à l'API"""
-"""json : sera utiliser avec json.loads pour deserialiser le texte contenant du json vers un objet Python en utilisant une table de conversion"""
+from models.managers.productsmanager import ProductsManager
 
 class ApiManager(Manager):
 
+    """Class used to query the API, retrieve data, process it and send it to the product manager."""
 
-    """Création d'une class gérant la connexion à l'API d'open food fact"""
+    def search_categories(self):
 
-    def search_categories_with_api(self):
+        """Method querying the OpenFoodFac API to retrieve categories.
+        Methode sort them by increasing popularity. 
+        returns : 
+        - name_categories (liste) : list name of the first six categories"""
 
-        """méthode utilisant request pour aller chercher les informations
-        transformation du fichier json en objet python
-        enregistrement du résultat voulu dans une liste
-        return une liste avec les 6 premières catégories"""
-
-        search_categories = requests.get("https://fr.openfoodfacts.org/categories.json")
-        read = json.loads(search_categories.text)
-        list_dict_categories = read['tags']
-        list_dict_categories.sort(key=lambda x: x["products"], reverse=True)
-        return list_dict_categories[:6]
-
-    def save_name_categories(self):
+        categories_find = requests.get("https://fr.openfoodfacts.org/categories.json")
+        read = json.loads(categories_find.text)
+        categories = read['tags']
+        categories.sort(key=lambda x: x["products"], reverse=True)
+        six_categories = categories[:6]
+        name_categories = []
+        for element in six_categories:
+            name_categories.append(element['name'])
         
-        """ méthode permettant de retourner la liste de nom des 6 catégories ayant le + de produits"""
-        name_cate = []
-        for element in self.search_categories_with_api():
-            name_cate.append(element['name'])
-        
-        return name_cate
+        return name_categories
 
-    def search_product_in_categories(self):
+    def search_products(self):
     
-        """méthode pour chercher les 10 premiers produits des 6 premières catégories
-        retourne une list contenant des listes de dictionnaires de produuits"""
-        list_all_product = []
-        for element in self.save_name_categories():
-            r = requests.get("https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0={}&page_size=1&json=1".format(element))
-            result = json.loads(r.text)
-            list_all_product.append(result['products'][:1])
+        """ Method requesting the OpenFoodFac API to find the products with the category list.
+        The method registers products with the Product class.
+        returns : 
+        - products (liste) : list of product with ID = None."""
 
-        return list_all_product
+        products_saved = []
+        products = []
+        for element in self.search_categories():
+            products_find= requests.get("https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0={}&page_size=1&json=1".format(element))
+            result = json.loads(products_find.text)
+            products_saved.append(result['products'][:1])
 
-    def creat_product(self):
-
-        """methode générant des objets product et les enregistrant dans une liste retourner"""
-    
-        list_o_product_no_id = []
-        for element in self.search_product_in_categories():
+        for element in products_saved:
             for item in element:
                 newprod = Product(item['product_name_fr'], item['nutriscore_grade'], item['categories'], item['url'], item['brands'], item['stores'])
-                list_o_product_no_id.append(newprod)    
-        
-        return list_o_product_no_id
+                products.append(newprod)    
 
-    def save_in_database(self):
+        return products
 
-        promana = ProductManager()
-        promana.save_bonde_database(self.creat_product())
+    def save_data(self):
+
+        """method calling the product manager module to sort and save the data in the database"""
+
+        productmanager = ProductsManager()
+        productmanager.save_relationships(self.search_products())
        
-
-
-
-    
-   
