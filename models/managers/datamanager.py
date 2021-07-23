@@ -26,9 +26,9 @@ class DataManager(Manager):
 
         self.cursor = self.connexion.cursor()
 
-        sauvegarde = "C:\\Users\\klere\\Documents\\P5\\sauvegarde.sql"
+        database = "C:\\Users\\klere\\Documents\\P5\\projet\\-P5-Open-Food-Facts\\models\\settings\\sauvegarde.sql"
         
-        with open(sauvegarde) as infile:
+        with open(database) as infile:
             sqlrequests = infile.read().split(';')
             for sqlrequests in sqlrequests:
                 if sqlrequests.strip():
