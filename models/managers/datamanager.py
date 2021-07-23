@@ -1,7 +1,7 @@
 from models.managers.manager import Manager
 
 class DataManager(Manager):
-#"brands_products", "stores_products","categories_products, "brands", "stores", "categories","
+
     def delete_tables(self):
 
         tables = ( "brands_products", "stores_products","categories_products", "brands", "stores", "categories", "substitute", "products" )
@@ -35,24 +35,6 @@ class DataManager(Manager):
                     self.cursor.execute(sqlrequests)
 
 
-
-        #sql = "source sauvegarde"
-
-        #for line in open("source C:\\Users\\klere\\Documents\\P5\\sauvegarde.sql","r"):
-            #self.cursor.execute(line)
-
-        #self.cursor.execute(sql)
-
-        self.connexion.commit()
-
-        self.cursor.close()
-
-        self.cursor = self.connexion.cursor()
-
-        sql = "SHOW TABLES"
-
-        pouet = self.cursor.execute(sql)
-        print (pouet)
 
         
 
