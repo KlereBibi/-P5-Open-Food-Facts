@@ -10,10 +10,7 @@ class Category:
         Args : 
         - name (str) : name of category
         - id (int) : id with value None or database
-
-        Attributs: 
-        - attr1 (int) : value id in arguments
-        - attr2 (str) : name of category (in arguments) 
+ 
         """
 
         self.id = id

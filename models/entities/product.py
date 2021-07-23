@@ -21,15 +21,6 @@ class Product:
         - stores (stre) : all product stores in chain of character
         - id (int) : value None or from Database
         
-            Attributs: 
-        - attr1 (int) : value id argument's id
-        - attr2 (str) : value from argument's name
-        - attr3 (str) : value from argument's nutriscore
-        - attr4 (liste) : liste object categories
-        - attr5 (str) : value from argument's url
-        - attr6 (liste) : liste object brands
-        - attr7 (liste) : liste object stores
-        
         use of a condition to call methods allowing the creation of list of stores, brands and categories object
         """
 

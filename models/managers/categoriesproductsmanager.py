@@ -9,7 +9,7 @@ class CategoriesProductsManager(Manager):
         Args:
         -Manager (class parent): initializes the connection to the database """
 
-    def save_categoriesproducts(self, tup_categoriesproducts):
+    def save(self, tup_categoriesproducts):
         
         """method to save data in the brandsproducts table
         Args : 

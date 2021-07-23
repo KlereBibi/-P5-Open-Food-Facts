@@ -8,10 +8,8 @@ class Manager:
 
     def __init__(self):
         
-        """constructor containing the accesses to the database
-        attri1 (def) :  open and store the connexion 
-        attri2 (def) : creat the new cursor"""
-
+        """constructor containing the accesses to the database"""
+      
         self.connexion = mysql.connector.connect(
             host = "localhost",
             user = "root",

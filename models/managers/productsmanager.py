@@ -59,7 +59,7 @@ class ProductsManager(Manager):
             for catego in element.categories:
                 tup_categories.append((None, catego.name))
         
-        categories_save = categoriesmanager.record_categories(tup_categories)
+        categories_save = categoriesmanager.save(tup_categories)
 
         return categories_save
 
@@ -81,7 +81,7 @@ class ProductsManager(Manager):
             for brand in element.brands:
                 tup_brands.append((None, brand.name))
         
-        brands_save = brandsmanager.record_brands(tup_brands)
+        brands_save = brandsmanager.save(tup_brands)
 
         return brands_save
 
@@ -103,7 +103,7 @@ class ProductsManager(Manager):
             for store in element.stores:
                 tup_stores.append((None, store.name))
         
-        stores_save = storesmanager.record_stores(tup_stores)
+        stores_save = storesmanager.save(tup_stores)
 
         return stores_save
 
@@ -190,18 +190,18 @@ class ProductsManager(Manager):
         tup_productstores = []
 
         for element in productscategories:
-             tup_productscategories.append((element.id_products, element.id_categories))
+             tup_productscategories.append((element.id_product, element.id_category))
         categoriesproductsmanager = CategoriesProductsManager()
-        categoriesproductsmanager.save_categoriesproducts(tup_productscategories)
+        categoriesproductsmanager.save(tup_productscategories)
         
         for element in productsbrands:
             tup_productsbrands.append((element.id_products, element.id_brands))
         brandsproductsmanager = BrandsProductsManager()
-        brandsproductsmanager.save_brandsproducts(tup_productsbrands)
+        brandsproductsmanager.save(tup_productsbrands)
 
         for element in productstores:
             tup_productstores.append((element.id_products, element.id_stores))
         storesproductsmanager = StoresProductsManager()
-        storesproductsmanager.save_storesproducts(tup_productstores)
+        storesproductsmanager.save(tup_productstores)
 
         

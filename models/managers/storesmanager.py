@@ -10,7 +10,7 @@ class StoresManager(Manager):
         Args:
         -Manager (class parent): initializes the connection to the database """
     
-    def record_stores(self, stores):
+    def save(self, stores):
 
         """method to save and retrieve data in the stores table
         Args : 

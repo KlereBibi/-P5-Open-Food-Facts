@@ -2,18 +2,23 @@
 
 from models.managers.manager import Manager
 
+
 class StoresProductsManager(Manager):
 
-    def save_storesproducts(self, storesproducts):
-        
-        """method to save data in the storesproducts table
-        Args : 
-        - storesproducts (liste) : tuple with id_products and id_stores
-        """
+    """class to communicate with table StoresProductsManager
+        Args:
+        -Manager (class parent): initializes the connection to the database """
 
-        sql = "INSERT INTO stores_products (id_products, id_stores) VALUES (%s, %s)"
-    
-        self.cursor.executemany(sql, stores)
+    def save(self, storesproducts):
+
+        """method to save data in the storesproducts table
+        Args:
+        - storesproducts (liste) : tuple with id_products and id_stores"""
+
+        sql = "INSERT INTO stores_products (id_products, id_stores)\
+             VALUES (%s, %s)"
+
+        self.cursor.executemany(sql, storesproducts)
 
         self.connexion.commit()
 

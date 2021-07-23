@@ -11,7 +11,7 @@ class CategoriesManager(Manager):
         Args:
         -Manager (class parent): initializes the connection to the database """
 
-    def record_categories(self, categories):
+    def save(self, categories):
 
         """method to save and retrieve data in the categories table
         Args : 
@@ -47,9 +47,9 @@ class CategoriesManager(Manager):
     
         categories_database = self.cursor.fetchall()
 
-        categories_save = []
+        categories_saved = []
         for element in categories_database:
-            categories_save.append(Category(element[1], element[0]))
+            categories_saved.append(Category(element[1], element[0]))
 
         return categories_saved
 

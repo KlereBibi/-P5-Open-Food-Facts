@@ -10,7 +10,7 @@ class BrandsManager(Manager):
         Args:
         -Manager (class parent): initializes the connection to the database """
     
-    def record_brands(self, brands):
+    def save(self, brands):
 
         """method to save and retrieve data in the brands table
         Args : 

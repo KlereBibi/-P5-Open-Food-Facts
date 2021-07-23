@@ -2,14 +2,8 @@
 
 """This module contains the main function of the application"""
 
-from models.managers.apimanager import ApiManager
-
-def main():
-
-    """Main function of the game. """
-
-    run = ApiManager()
-    run.save_data()
+from controllers.controller import Controller
 
 if __name__ == '__main__':
-    main()
+    run = Controller()
+    run.ask_user()
