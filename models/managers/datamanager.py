@@ -12,32 +12,17 @@ class DataManager(Manager):
 
     def delete_tables(self):
 
-        """method to delete table in database """
+        """method to drop all tables in the database by reading a file containing sql commands"""
         
-        self.cursor = self.connexion.cursor()
-
-        command = join(dirname(dirname(abspath(__file__))), "settings", "deletetables.sql")
-        with open(command) as infile:
-            sqlrequests = infile.read().split(';')
-            for sqlrequests in sqlrequests:
-                if sqlrequests.strip():
-                    self.cursor.execute(sqlrequests)
-
-        print("ok")
+        super().read_command_sql("deletetables.sql")
 
         self.creat_table()
 
     def creat_table(self):
 
-        self.cursor = self.connexion.cursor()
+        """method to creat all tables in the database by reading a file containing sql commands"""
 
-        database = join(dirname(dirname(abspath(__file__))), "settings", "sauvegarde.sql")
-        print(database)
-        with open(database) as infile:
-            sqlrequests = infile.read().split(';')
-            for sqlrequests in sqlrequests:
-                if sqlrequests.strip():
-                    self.cursor.execute(sqlrequests)
+        super().read_command_sql("sauvegarde.sql")
 
 
 
