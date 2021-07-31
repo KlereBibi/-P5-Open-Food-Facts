@@ -22,5 +22,6 @@ class Controller:
     def reinit_database(self):
 
         datamanager = DataManager()
-        datamanager.delete_tables()
+        datamanager.creat_table()
+        #datamanager.delete_tables()
         #change le nom 
