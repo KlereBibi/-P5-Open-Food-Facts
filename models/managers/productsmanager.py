@@ -124,8 +124,6 @@ class ProductsManager(Manager):
 
         self.connexion.commit()
 
-        print(self.cursor.rowcount, "ligne insérée.")
-
         self.cursor.close()
 
         self.cursor = self.connexion.cursor()
@@ -134,15 +132,15 @@ class ProductsManager(Manager):
         for element in products_tup:
             name_product.append(element[1])
 
-        names = tuple(name_product)#j'en fais un grand tuple
+        names = tuple(name_product)
 
         query= (
             "SELECT * FROM products "
-            f"WHERE name IN ({', '.join('%s' for _ in names)})" #comprends pas tout
+            f"WHERE name IN ({', '.join('%s' for _ in names)})" 
         )
         self.cursor.execute(query, names)
     
-        products_database = self.cursor.fetchall()#je récupère la donnée sous forme de tuple
+        products_database = self.cursor.fetchall()
 
         products_save = []
 
@@ -150,7 +148,7 @@ class ProductsManager(Manager):
             products_save.append(Product(element[1], element[2], None, element[3], None, None, element[0]))
             
         return products_save
-        #la problématique : je peux avoir deux fois un même produit dans deux catégories différentes - 
+        
 
     def save_relationships(self, products):
 
@@ -204,4 +202,4 @@ class ProductsManager(Manager):
         storesproductsmanager = StoresProductsManager()
         storesproductsmanager.save(tup_productstores)
 
-        
+

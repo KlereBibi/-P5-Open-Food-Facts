@@ -25,8 +25,6 @@ class StoresManager(Manager):
 
         self.connexion.commit()
 
-        print(self.cursor.rowcount, "ligne insérée.")
-
         self.cursor.close()
 
         self.cursor = self.connexion.cursor()

@@ -1,6 +1,7 @@
 """this module allows you to connectinteract with the database"""
 
 import mysql.connector
+from os.path import join, dirname, abspath
 
 class Manager:
 
@@ -28,13 +29,13 @@ class Manager:
         self.cursor = self.connexion.cursor()
 
         database = join(dirname(dirname(abspath(__file__))), "settings", file)
-        print(database)
+
         with open(database) as infile:
             sqlrequests = infile.read().split(';')
             for sqlrequests in sqlrequests:
                 if sqlrequests.strip():
                     self.cursor.execute(sqlrequests)
 
-        
+        self.cursor.close()
 
         

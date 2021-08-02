@@ -26,13 +26,9 @@ class CategoriesManager(Manager):
 
         self.connexion.commit()
 
-        print(self.cursor.rowcount, "ligne insérée.")
-
         self.cursor.close()
 
         self.cursor = self.connexion.cursor()
-
-        """récupération des id des catégories en comparant avec la liste des catégories insérées"""
 
         name_categories = []
         for element in categories:
@@ -53,8 +49,22 @@ class CategoriesManager(Manager):
 
         return categories_saved
 
+        self.cursor.close()
+
+    def search_categories(self):
+
+        sql = "SELECT * FROM categories "
         
-        
+        self.cursor.execute(sql)
+
+        categories = self.cursor.fetchall()
+
+        return categories
+
+        self.cursor.close()
+
+
+
     
 
     

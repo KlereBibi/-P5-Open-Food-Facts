@@ -22,6 +22,23 @@ class CategoriesProductsManager(Manager):
 
         self.connexion.commit()
 
+    def search_product(self, userchoice):
+        
+        # self.cursor.execute("SELECT id_products FROM categories_products WHERE id_categories=%(id_categories)s",
+        # {'id_categories': userchoice})
 
+        # products = self.cursor.fetchall()
 
-       
+        # self.cursor.close()
+
+        # products_liste = []
+
+        self.cursor = self.connexion.cursor()
+
+      
+        self.cursor.execute("SELECT DISTINCT products.id, products.name FROM products INNER JOIN categories_products ON products.id = categories_products.id_products WHERE categories_products.id_products IN (SELECT DISTINCT id_products FROM categories_products WHERE id_categories=%(id_categories)s) ",
+        {'id_categories': userchoice})
+
+        name_products = self.cursor.fetchall()
+
+        return name_products

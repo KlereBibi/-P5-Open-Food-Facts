@@ -1,15 +1,15 @@
-DROP TABLE brands_products;
+DROP TABLE IF EXISTS brands_products;
 
-DROP TABLE stores_products;
+DROP TABLE IF EXISTS stores_products;
 
-DROP TABLE categories_products;
+DROP TABLE IF EXISTS categories_products;
 
-DROP TABLE brands;
+DROP TABLE IF EXISTS brands;
 
-DROP TABLE stores;
+DROP TABLE IF EXISTS stores;
 
-DROP TABLE categories;
+DROP TABLE IF EXISTS categories;
 
-DROP TABLE substitute;
+DROP TABLE IF EXISTS substitute;
 
-DROP TABLE products;
+DROP TABLE IF EXISTS products;

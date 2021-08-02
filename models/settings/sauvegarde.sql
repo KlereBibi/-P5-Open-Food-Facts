@@ -124,7 +124,7 @@ DROP TABLE IF EXISTS `products`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `nutriscore` char(1) NOT NULL,
   `url` text NOT NULL,
   PRIMARY KEY (`id`)

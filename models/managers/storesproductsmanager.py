@@ -22,4 +22,4 @@ class StoresProductsManager(Manager):
 
         self.connexion.commit()
 
-        print(self.cursor.rowcount, "ligne insérée.")
+        

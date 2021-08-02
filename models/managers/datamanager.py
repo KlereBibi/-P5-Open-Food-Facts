@@ -2,7 +2,7 @@
 """module to delete and creat tables in database """
 
 from models.managers.manager import Manager
-from os.path import join, dirname, abspath
+
 
 class DataManager(Manager):
 
@@ -13,7 +13,7 @@ class DataManager(Manager):
     def delete_tables(self):
 
         """method to drop all tables in the database by reading a file containing sql commands"""
-        
+      
         super().read_command_sql("deletetables.sql")
 
         self.creat_table()
