@@ -2,6 +2,7 @@
 
 import mysql.connector
 from models.managers.manager import Manager
+from models.entities.product import Product
 
 class CategoriesProductsManager(Manager):
 
@@ -22,23 +23,22 @@ class CategoriesProductsManager(Manager):
 
         self.connexion.commit()
 
-    def search_product(self, userchoice):
-        
-        # self.cursor.execute("SELECT id_products FROM categories_products WHERE id_categories=%(id_categories)s",
-        # {'id_categories': userchoice})
-
-        # products = self.cursor.fetchall()
-
-        # self.cursor.close()
-
-        # products_liste = []
+    def search_products(self, userchoice):
 
         self.cursor = self.connexion.cursor()
-
       
-        self.cursor.execute("SELECT DISTINCT products.id, products.name FROM products INNER JOIN categories_products ON products.id = categories_products.id_products WHERE categories_products.id_products IN (SELECT DISTINCT id_products FROM categories_products WHERE id_categories=%(id_categories)s) ",
+        self.cursor.execute("SELECT DISTINCT products.id, products.name, products.nutriscore FROM products INNER JOIN categories_products ON products.id = categories_products.id_products WHERE categories_products.id_products IN (SELECT DISTINCT id_products FROM categories_products WHERE id_categories=%(id_categories)s) ",
         {'id_categories': userchoice})
 
-        name_products = self.cursor.fetchall()
+        #"SELECT p.id, p.name, p.nutriscore FROM products as p, INNER JOIN categories_products as cp ON p.id = cp.id_products INNER JOIN categories as c on c.id = cp.id_categories WHERE c.id =userentry"
 
-        return name_products
+        products = self.cursor.fetchall()
+
+        products_saved = []
+
+        for element in products:
+            products_saved.append(Product(element[1], element[2], None, None, None, None, element[0]))
+
+        return products_saved #bon endroit?
+
+    

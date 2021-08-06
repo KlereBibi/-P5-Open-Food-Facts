@@ -53,19 +53,20 @@ class CategoriesManager(Manager):
 
     def search_categories(self):
 
+        """method allowing to retrieve the categories present in the database
+        return : list of object categories"""
+
         sql = "SELECT * FROM categories "
         
         self.cursor.execute(sql)
 
         categories = self.cursor.fetchall()
 
-        return categories
+        categories_saved = []
+
+        for element in categories:
+            categories_saved.append(Category(element[1], element[0]))
+
+        return categories_saved
 
         self.cursor.close()
-
-
-
-    
-
-    
-   

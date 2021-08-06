@@ -118,7 +118,7 @@ class ProductsManager(Manager):
 
         products_tup = self.products_to_save(products)
         
-        sql = "INSERT INTO products (id, name, nutriscore, url) VALUES (%s, %s, %s, %s)"
+        sql = "INSERT INTO products (id, name, nutriscore, url) VALUES (%s, %s, %s, %s) ON DUPLICATE KEY UPDATE name = name"
 
         self.cursor.executemany(sql, products_tup)
 

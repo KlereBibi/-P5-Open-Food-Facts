@@ -13,9 +13,10 @@ class Menu:
         userchoice = input("Veuillez faire votre choix :\n \
             1/ voir mes favoris\n \
             2/ rechercher un substitut\n \
-            3/ réinitilisation de la base de donnée\n")
+            3/ réinitilisation de la base de donnée\n \
+                Note: Pour revenir au menu principal appuyer sur q\n")
 
-        liste = ("1", "2", "3")
+        liste = ("1", "2", "3", "q")
         
         if userchoice in liste:
             return userchoice
@@ -28,21 +29,27 @@ class Menu:
         """method requesting the name of the player's database
         return the choice (str)"""
 
-        userchoice = input("merci d'inscrire le nom de votre base de donnée:\n")
+        userchoice = input("Merci d'inscrire le nom de votre base de donnée:\n")
 
         return userchoice
 
     def choice(self, message):
 
+        
+        """method offering choices to the user among the lists
+        args: message (list)
+        return choice utilisateur or False 
+        """
+
         print("Veuillez faire votre choix et inscrire le numéro correpondant: ")
         
         for element in message:
-            print(element[0], ":", element[1])
+            print(element.id, ":", element.name)
 
         userchoice = input("")
 
-        return userchoice
-
-
-        
+        if userchoice == "q":
+            return False
+        else:
+            return userchoice 
         

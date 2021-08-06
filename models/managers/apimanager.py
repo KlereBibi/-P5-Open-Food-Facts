@@ -40,7 +40,7 @@ class ApiManager(Manager):
         for element in self.search_categories():
             products_find= requests.get("https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0={}&page_size=1&json=1".format(element))
             result = json.loads(products_find.text)
-            products_saved.append(result['products'][:2])
+            products_saved.append(result['products'][:10])
 
         for element in products_saved:
             for item in element:
