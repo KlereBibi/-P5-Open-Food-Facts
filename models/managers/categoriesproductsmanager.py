@@ -26,11 +26,8 @@ class CategoriesProductsManager(Manager):
     def search_products(self, userchoice):
 
         self.cursor = self.connexion.cursor()
-      
-        self.cursor.execute("SELECT DISTINCT products.id, products.name, products.nutriscore FROM products INNER JOIN categories_products ON products.id = categories_products.id_products WHERE categories_products.id_products IN (SELECT DISTINCT id_products FROM categories_products WHERE id_categories=%(id_categories)s) ",
-        {'id_categories': userchoice})
 
-        #"SELECT p.id, p.name, p.nutriscore FROM products as p, INNER JOIN categories_products as cp ON p.id = cp.id_products INNER JOIN categories as c on c.id = cp.id_categories WHERE c.id =userentry"
+        self.cursor.execute("SELECT p.id, p.name, p.nutriscore FROM products as p INNER JOIN categories_products as cp ON p.id = cp.id_products INNER JOIN categories as c on c.id = cp.id_categories WHERE c.id =%(id_categories)s", {'id_categories': userchoice})
 
         products = self.cursor.fetchall()
 
@@ -38,6 +35,7 @@ class CategoriesProductsManager(Manager):
 
         for element in products:
             products_saved.append(Product(element[1], element[2], None, None, None, None, element[0]))
+            
 
         return products_saved #bon endroit?
 

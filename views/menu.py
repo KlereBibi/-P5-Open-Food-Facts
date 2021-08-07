@@ -35,12 +35,10 @@ class Menu:
 
     def choice(self, message):
 
-        
         """method offering choices to the user among the lists
         args: message (list)
         return choice utilisateur or False 
         """
-
         print("Veuillez faire votre choix et inscrire le numéro correpondant: ")
         
         for element in message:
@@ -52,4 +50,15 @@ class Menu:
             return False
         else:
             return userchoice 
+    
+    def choice_saved_substitute(self):
+
         
+        userchoice = input("Souhaitez vous enregistrer le résultat de votre recherche? \n Pour oui tappez o pour non tappez n")
+
+        liste = ("o", "n", "q")
+
+        if userchoice in liste:
+            return userchoice
+        else:
+            return False

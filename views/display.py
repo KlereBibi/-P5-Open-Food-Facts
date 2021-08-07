@@ -19,3 +19,11 @@ class Display:
     def error_letters(self):
 
         print("La saisie est incorrect, veuillez recommencer et saisir des chiffres")
+
+    def substitute_ok(self, substitute):
+
+        print("Le substitut correspondant à votre demande est : {}".format(substitute.name))
+
+    def no_substitut(self):
+
+        print("Désolé nous n'avons pas trouvé de substitut correspondant à la demande")

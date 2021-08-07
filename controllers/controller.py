@@ -127,10 +127,15 @@ class Controller:
 
     def choice_product(self, user_category):
         
+        #MENTORAT : est ce au bon endroit (categories_products_manager)
 
         products = self.categoriesproductsmanager.search_products(user_category)
 
         user_product = self.menu.choice(products)
+
+        for element in products:
+            if str(element.id) == user_product:
+                product = element
 
         if user_product:
 
@@ -139,10 +144,9 @@ class Controller:
                 selected_products = [product for product in products if product.id == int(user_product)]
 
                 if selected_products:
-
-                    self.find_substitute(user_product)
+                    
+                    self.substitut(product)
                 
-
                 else:
 
                     self.message.retry()
@@ -150,7 +154,6 @@ class Controller:
                     products = self.choice_productscategories
 
                     userchoice = self.menu.choice(products)
-
 
             except ValueError:
                 self.message.error_letters()
@@ -160,12 +163,29 @@ class Controller:
 
             self.ask_user()
 
+    def substitut(self, product):
 
-    def find_substitute(self, user_product):
+        substitute = self.productsmanager.search_substitut(product)
 
-        pass
+        if substitute:
+            self.message.substitute_ok(substitute)
 
-        #self.categoriesproductsmanager.search_substitue(user_product)
+            userchoice = self.menu.choice_saved_substitute()
 
-        
-        
+            if userchoice: 
+
+                if userchoice == "o":
+                    pass
+                if userchoice == "n":
+                    pass 
+                if userchoice == "q":
+                    self.ask_user()
+
+            else:
+
+                self.message.retry()
+
+        else: 
+            self.message.no_substitut()
+
+       

@@ -202,4 +202,17 @@ class ProductsManager(Manager):
         storesproductsmanager = StoresProductsManager()
         storesproductsmanager.save(tup_productstores)
 
+    def search_substitut(self, product):
+
+        self.cursor.execute("SELECT ok.id, ok.name, ok.nutriscore, ok.url FROM (SELECT DISTINCT p.id, p.name, p.nutriscore, p.url, count(*) as nb FROM products as p INNER JOIN categories_products as cp ON p.id = cp.id_products WHERE cp.id_categories IN (SELECT cp.id_categories FROM categories_products as cp WHERE id_products = %(id_products)s) AND NOT cp.id_products = %(id_products)s GROUP BY cp.id_products ORDER by nutriscore ASC) as ok WHERE nb = (SELECT MAX(nb) FROM (SELECT DISTINCT p.id, p.name, p.nutriscore, p.url, count(*) as nb FROM products as p INNER JOIN categories_products as cp ON p.id = cp.id_products WHERE cp.id_categories IN (SELECT cp.id_categories FROM categories_products as cp WHERE id_products = %(id_products)s) AND NOT cp.id_products = %(id_products)s GROUP BY cp.id_products ORDER by nutriscore ASC) as o) AND ok.nutriscore < %(nutriscore)s LIMIT 1", {'id_products' : product.id, 'nutriscore': product.nutriscore})
+
+        substitut = self.cursor.fetchall()
+
+        if substitut:
+            for element in substitut:
+                products_substitute = Product(element[1], element[2], None, None, None, None, element[0])
+                return products_substitute
+        else:
+            return False
+
 
