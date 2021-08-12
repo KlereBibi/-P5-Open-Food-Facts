@@ -23,20 +23,6 @@ class CategoriesProductsManager(Manager):
 
         self.connexion.commit()
 
-    def search_products(self, userchoice):
-
-        self.cursor = self.connexion.cursor()
-
-        self.cursor.execute("SELECT p.id, p.name, p.nutriscore FROM products as p INNER JOIN categories_products as cp ON p.id = cp.id_products INNER JOIN categories as c on c.id = cp.id_categories WHERE c.id =%(id_categories)s", {'id_categories': userchoice})
-
-        products = self.cursor.fetchall()
-
-        products_saved = []
-
-        for element in products:
-            products_saved.append(Product(element[1], element[2], None, None, None, None, element[0]))
-            
-
-        return products_saved #bon endroit?
+     
 
     

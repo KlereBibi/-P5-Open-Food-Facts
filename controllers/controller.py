@@ -5,6 +5,8 @@ from views.menu import Menu
 
 from views.display import Display
 
+from models.entities.substitute import Substitute
+
 from models.managers.apimanager import ApiManager
 
 from models.managers.datamanager import DataManager
@@ -12,6 +14,12 @@ from models.managers.datamanager import DataManager
 from models.managers.productsmanager import ProductsManager
 
 from models.managers.categoriesmanager import CategoriesManager
+
+from models.managers.substitutemanager import SubstituteManager
+
+from models.managers.brandsproductsmanager import BrandsProductsManager
+
+from models.managers.storesproductsmanager import StoresProductsManager
 
 from models.managers.categoriesproductsmanager import CategoriesProductsManager
 
@@ -41,7 +49,12 @@ class Controller:
         self.categoriesproductsmanager = CategoriesProductsManager()
 
         self.productsmanager = ProductsManager()
+        
+        self.substitutemanager = SubstituteManager()
 
+        self.brandsproductsmanager = BrandsProductsManager()
+
+        self.storesproductsmanager = StoresProductsManager()
 
     def ask_user(self):
 
@@ -54,12 +67,28 @@ class Controller:
 
         if answer:
 
-            if answer == "3":
+            if answer == "1":
 
-                self.reboot_database()
+                all_substitute = self.substitutemanager.all_substitute()
+                if all_substitute:
+                    self.message.all_substitute(all_substitute)
+                    userchoice = self.menu.return_main_menu()
+                    if userchoice:
+
+                        if userchoice == "o" or userchoice == "q":
+                            self.ask_user()
+                    else:
+                        pass
+                else:
+                    self.message.no_substitut_database()
+                    self.ask_user()
 
             if answer == "2":
                 self.choice_categories()
+
+            if answer == "3":
+
+                self.reboot_database()
 
             if answer == "q":
 
@@ -95,6 +124,7 @@ class Controller:
 
     def choice_categories(self):
 
+        """method offering the user several choices of categories"""
 
         categories = self.categoriesmanager.search_categories()
 
@@ -126,10 +156,10 @@ class Controller:
 
 
     def choice_product(self, user_category):
-        
-        #MENTORAT : est ce au bon endroit (categories_products_manager)
 
-        products = self.categoriesproductsmanager.search_products(user_category)
+        """method calling other methods to offer the user several choices of products in the selected categories"""
+
+        products = self.productsmanager.search_products(user_category)
 
         user_product = self.menu.choice(products)
 
@@ -145,15 +175,14 @@ class Controller:
 
                 if selected_products:
                     
-                    self.substitut(product)
+                    self.search_substitute(product)
+                    self.message.saved()
+                    self.ask_user()
                 
                 else:
 
                     self.message.retry()
-
-                    products = self.choice_productscategories
-
-                    userchoice = self.menu.choice(products)
+                    self.choice_product(user_category)
 
             except ValueError:
                 self.message.error_letters()
@@ -163,29 +192,38 @@ class Controller:
 
             self.ask_user()
 
-    def substitut(self, product):
+    def search_substitute(self, product):
 
-        substitute = self.productsmanager.search_substitut(product)
+        """method calling other methods to find the substitute corresponding to the selected product"""
+
+        substitute = self.substitutemanager.search_substitut(product)
 
         if substitute:
-            self.message.substitute_ok(substitute)
-
+            brands = self.brandsproductsmanager.find(substitute)
+            stores = self.storesproductsmanager.find(substitute)
+            self.message.substitute_ok(substitute, brands, stores)
             userchoice = self.menu.choice_saved_substitute()
 
             if userchoice: 
 
                 if userchoice == "o":
-                    pass
+                    o_substitute = Substitute(product.id, substitute.id)
+                    self.substitutemanager.saved_substitut(o_substitute)
+                    self.message.saved()
+                    self.message.return_main()
+                    self.ask_user()
                 if userchoice == "n":
-                    pass 
+                    self.ask_user()
                 if userchoice == "q":
                     self.ask_user()
 
             else:
 
                 self.message.retry()
+                self.message.substitute_ok(substitute, brands, stores)
 
         else: 
             self.message.no_substitut()
+            self.ask_user()
 
        

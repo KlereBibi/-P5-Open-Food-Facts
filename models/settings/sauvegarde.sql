@@ -203,6 +203,7 @@ CREATE TABLE `substitute` (
   `id_product_substitution` int unsigned NOT NULL,
   KEY `fk_product_origin` (`id_product_origin`),
   KEY `fk_product_substitution` (`id_product_substitution`),
+  UNIQUE KEY `id_product_origin` (`id_product_origin`),
   CONSTRAINT `fk_product_origin` FOREIGN KEY (`id_product_origin`) REFERENCES `products` (`id`),
   CONSTRAINT `fk_product_substitution` FOREIGN KEY (`id_product_substitution`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

@@ -158,7 +158,7 @@ class ProductsManager(Manager):
         - products (liste) : liste d'object product from apimanager
         """
 
-        categories_saved = self.save_categories(products)#changement type : categories / products / brands
+        categories_saved = self.save_categories(products)
         brands_saved = self.save_brands(products)
         stores_saved = self.save_stores(products)
         products_saved = self.save_products(products)
@@ -202,17 +202,24 @@ class ProductsManager(Manager):
         storesproductsmanager = StoresProductsManager()
         storesproductsmanager.save(tup_productstores)
 
-    def search_substitut(self, product):
+    def search_products(self, userchoice):
 
-        self.cursor.execute("SELECT ok.id, ok.name, ok.nutriscore, ok.url FROM (SELECT DISTINCT p.id, p.name, p.nutriscore, p.url, count(*) as nb FROM products as p INNER JOIN categories_products as cp ON p.id = cp.id_products WHERE cp.id_categories IN (SELECT cp.id_categories FROM categories_products as cp WHERE id_products = %(id_products)s) AND NOT cp.id_products = %(id_products)s GROUP BY cp.id_products ORDER by nutriscore ASC) as ok WHERE nb = (SELECT MAX(nb) FROM (SELECT DISTINCT p.id, p.name, p.nutriscore, p.url, count(*) as nb FROM products as p INNER JOIN categories_products as cp ON p.id = cp.id_products WHERE cp.id_categories IN (SELECT cp.id_categories FROM categories_products as cp WHERE id_products = %(id_products)s) AND NOT cp.id_products = %(id_products)s GROUP BY cp.id_products ORDER by nutriscore ASC) as o) AND ok.nutriscore < %(nutriscore)s LIMIT 1", {'id_products' : product.id, 'nutriscore': product.nutriscore})
+        """method requesting in the database to find the products present in the categories selected by the user.
+        returns : liste of objects products """
+    
+        self.cursor = self.connexion.cursor()
 
-        substitut = self.cursor.fetchall()
+        self.cursor.execute("SELECT p.id, p.name, p.nutriscore FROM products as p INNER JOIN categories_products as cp ON p.id = cp.id_products INNER JOIN categories as c on c.id = cp.id_categories WHERE c.id =%(id_categories)s", {'id_categories': userchoice})
 
-        if substitut:
-            for element in substitut:
-                products_substitute = Product(element[1], element[2], None, None, None, None, element[0])
-                return products_substitute
-        else:
-            return False
+        products = self.cursor.fetchall()
+
+        products_saved = []
+
+        for element in products:
+            products_saved.append(Product(element[1], element[2], None, None, None, None, element[0]))
+            
+        return products_saved
+
+    
 
 

@@ -9,7 +9,7 @@ class Product:
 
     """class to create a products object"""
 
-    def __init__(self, name, nutriscore, categories, url, brands, stores, id=None):
+    def __init__(self, name, nutriscore=None, categories=None, url=None, brands=None, stores=None, id=None):
 
         """class to create a product object
             Args:
@@ -40,7 +40,6 @@ class Product:
 
         
         """"split string of characters in liste and call class category to creat object category """
-
         list_cat_split = self.categories.split(',')
         self.categories = [Category(x) for x in list_cat_split]
 

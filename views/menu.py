@@ -54,7 +54,7 @@ class Menu:
     def choice_saved_substitute(self):
 
         
-        userchoice = input("Souhaitez vous enregistrer le résultat de votre recherche? \n Pour oui tappez o pour non tappez n")
+        userchoice = input("Souhaitez vous enregistrer le résultat de votre recherche? \n Pour oui tappez o pour non tappez n\n ")
 
         liste = ("o", "n", "q")
 
@@ -62,3 +62,16 @@ class Menu:
             return userchoice
         else:
             return False
+    
+    def return_main_menu(self):
+
+        userchoice = input("Voulez vous revenir au menu principal? \n Appuyez sur o pour oui et n pour quitter le programme\n")
+
+        liste = ("o", "n", "q")
+
+        if userchoice in liste:
+            return userchoice
+        else:
+            return False
+
+    
