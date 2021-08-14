@@ -72,13 +72,7 @@ class Controller:
                 all_substitute = self.substitutemanager.all_substitute()
                 if all_substitute:
                     self.message.all_substitute(all_substitute)
-                    userchoice = self.menu.return_main_menu()
-                    if userchoice:
-
-                        if userchoice == "o" or userchoice == "q":
-                            self.ask_user()
-                    else:
-                        pass
+                    self.ask_user()
                 else:
                     self.message.no_substitut_database()
                     self.ask_user()
@@ -175,7 +169,7 @@ class Controller:
 
                 if selected_products:
                     
-                    self.search_substitute(product)
+                    self.substitute(product)
                     self.message.saved()
                     self.ask_user()
                 
@@ -186,22 +180,20 @@ class Controller:
 
             except ValueError:
                 self.message.error_letters()
-                self.choice_productscategories(userchoice)
+                self.choice_product(userchoice)
 
         else:
 
             self.ask_user()
 
-    def search_substitute(self, product):
+    def substitute(self, product):
 
         """method calling other methods to find the substitute corresponding to the selected product"""
 
         substitute = self.substitutemanager.search_substitut(product)
 
         if substitute:
-            brands = self.brandsproductsmanager.find(substitute)
-            stores = self.storesproductsmanager.find(substitute)
-            self.message.substitute_ok(substitute, brands, stores)
+            self.message.substitute_ok(substitute)
             userchoice = self.menu.choice_saved_substitute()
 
             if userchoice: 

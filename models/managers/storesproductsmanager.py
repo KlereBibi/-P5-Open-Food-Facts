@@ -23,16 +23,4 @@ class StoresProductsManager(Manager):
 
         self.connexion.commit()
 
-    def find(self, substitute):
     
-        self.cursor.execute("SELECT s.name FROM stores as s INNER JOIN stores_products AS sp ON s.id = sp.id_stores WHERE sp.id_products =%(id_product)s", {'id_product' : substitute.id})
-
-        stores = self.cursor.fetchall()
-
-        l_stores = []
-
-        for element in stores:
-            store = Store( element[0], None)
-            l_stores.append(store)
-
-        return l_stores

@@ -18,14 +18,13 @@ class SubstituteManager(Manager):
             product_substitute = None
             for element in substitut:
                 if product_substitute == None:
-                    product_substitute = Product(element[1], element[2], None, element[3], [Brand(element[4])], [Store(element[5])], element[0])   
+                    product_substitute = Product(element[1], element[2], None, element[3], Brand(element[4]), [Store(element[5])], element[0])   
                 else:
-                    for brand in product_substitute.brands:
-                        if brand.name != element[4]:
-                            product_substitute.brands.append(Brand(element[4]))
-                    for store in product_substitute.stores:
-                        if store.name != element[5]:
-                            product_substitute.stores.append(Store(element[5]))
+                    store_list = []
+                    for store in product_substitute.stores:#voir pour mieux 
+                        store_list.append(store.name) #brands?
+                    if element[5] not in store_list:
+                        product_substitute.stores.append(Store(element[5], None))
                         
             return product_substitute
         else:

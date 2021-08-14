@@ -23,16 +23,4 @@ class BrandsProductsManager(Manager):
 
         self.connexion.commit()
 
-    def find(self, substitute):
-
-        self.cursor.execute("SELECT b.name FROM brands as b INNER JOIN brands_products AS bp ON b.id = bp.id_brands WHERE bp.id_products =%(id_product)s", {'id_product' : substitute.id})
-
-        brands = self.cursor.fetchall()
-
-        l_brand = []
-
-        for element in brands:
-            brand = Brand( element[0], None)
-            l_brand.append(brand)
-
-        return l_brand
+    
