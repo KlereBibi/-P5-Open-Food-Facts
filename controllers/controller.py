@@ -98,8 +98,8 @@ class Controller:
 
             try:
 
-                selected_categories = [categorie for categorie in categories \
-                if categorie.id == int(user_category)]
+                selected_categories = [categorie for categorie in categories
+                                       if categorie.id == int(user_category)]
 
                 if selected_categories:
 
@@ -134,8 +134,8 @@ class Controller:
 
             try:
 
-                selected_products = [product for product in products \
-                if product.id == int(user_product)]
+                selected_products = [product for product in products
+                                     if product.id == int(user_product)]
 
                 if selected_products:
 
@@ -178,6 +178,6 @@ class Controller:
             if userchoice == "q":
                 self.ask_user()
 
-        else: 
+        else:
             self.message.no_substitut()
             self.ask_user()

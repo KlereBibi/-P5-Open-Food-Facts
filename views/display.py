@@ -19,8 +19,8 @@ class Display:
             while the database is being filled"""
 
         print("Votre choix a été enregistré. "
-            "Le traitement des informations peut prendre quelques minutes, "
-            "merci de patienter")
+              "Le traitement des informations peut prendre quelques minutes, "
+              "merci de patienter")
 
     def finish(self, name_database):
 
@@ -30,7 +30,7 @@ class Display:
         name_database(str):name given to the database previously by the user"""
 
         print("La nouvelle base de donnée {} a été "
-             "crée et complétée".format(name_database))
+              "crée et complétée".format(name_database))
 
     def retry(self):
 
@@ -46,7 +46,7 @@ class Display:
                 and that letters have been inscribed in place of a number"""
 
         print("La saisie est incorrect, "
-             "veuillez recommencer et saisir des chiffres")
+              "veuillez recommencer et saisir des chiffres")
 
     def substitute_ok(self, substitute):
 
@@ -60,8 +60,8 @@ class Display:
         corresponding to OpenFoodFact"""  #a confirmé
 
         print("Le substitut trouvé est {} de la marque {} que vous "
-        "pouvez trouver "
-        "chez".format(substitute.name, substitute.brands.name), end=" ")
+              "pouvez trouver "
+              "chez".format(substitute.name, substitute.brands.name), end=" ")
 
         for element in substitute.stores:
             if element != substitute.stores[-1]:
@@ -70,15 +70,15 @@ class Display:
                 print(element.name, ".")
 
         print("Pour plus d'information, "
-        "veuillez trouver ci-joint "
-        "le lien vers OpenFoodFact {}.".format(substitute.url))
+              "veuillez trouver ci-joint "
+              "le lien vers OpenFoodFact {}.".format(substitute.url))
 
     def no_substitut(self):
 
         """method displaying the non possibility of finding a substitute"""
 
         print("Désolé nous n'avons pas trouvé "
-            "de substitut correspondant à la demande")
+              "de substitut correspondant à la demande")
 
     def saved(self):
 
@@ -105,7 +105,7 @@ class Display:
 
         for element in liste_substitute:
             print("-", element[0].name, "est remplacé "
-            "par", element[1].name, ".")
+                  "par", element[1].name, ".")
 
     def no_substitut_database(self):
 

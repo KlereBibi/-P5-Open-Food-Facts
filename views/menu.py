@@ -32,8 +32,8 @@ class Menu:
         """method requesting the name of the player's database.
         return:(str) the choice user for the database's name """
 
-        userchoice = input("Merci d'inscrire le nom \
-        de votre base de donnée:\n")
+        userchoice = input("Merci d'inscrire le nom"
+                           "de votre base de donnée:\n")
 
         return userchoice
 
@@ -47,11 +47,10 @@ class Menu:
 
         args:
         -message (list): contains the list of objects to select
-
         return: (str or False) choice utilisateur or False."""
 
-        print("Veuillez faire votre choix \
-        et inscrire le numéro correpondant: ")
+        print("Veuillez faire votre choix"
+              "et inscrire le numéro correpondant: ")
 
         for element in liste:
             print(element.id, ":", element.name)
