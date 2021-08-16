@@ -3,27 +3,28 @@
 import mysql.connector
 from os.path import join, dirname, abspath
 
+
 class Manager:
 
     """parent class allowing connection to the database"""
 
     def __init__(self):
-        
+
         """constructor containing the accesses to the database"""
-      
+
         self.connexion = mysql.connector.connect(
-            host = "localhost",
-            user = "root",
-            password = "184300",
-            database = "off"
+            host="localhost",
+            user="root",
+            password="184300",
+            database="off"
         )
-    
+
         self.cursor = self.connexion.cursor()
 
     def read_command_sql(self, file):
 
         """method allowing to read sql files and to execute them in the database
-        Arg: 
+        Arg:
         file : file to read"""
 
         self.cursor = self.connexion.cursor()
@@ -37,5 +38,3 @@ class Manager:
                     self.cursor.execute(sqlrequests)
 
         self.cursor.close()
-
-        

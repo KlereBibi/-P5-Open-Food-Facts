@@ -12,21 +12,16 @@ class DataManager(Manager):
 
     def delete_tables(self):
 
-        """method to drop all tables in the database by reading a file containing sql commands"""
-      
+        """method to drop all tables in the database
+        by reading a file containing sql commands."""
+
         super().read_command_sql("deletetables.sql")
 
         self.creat_table()
 
     def creat_table(self):
 
-        """method to creat all tables in the database by reading a file containing sql commands"""
+        """method to creat all tables in the database
+        by reading a file containing sql commands."""
 
         super().read_command_sql("sauvegarde.sql")
-
-
-
-        
-
-
-            

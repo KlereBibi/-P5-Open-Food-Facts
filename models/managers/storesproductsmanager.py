@@ -1,7 +1,6 @@
 """this module allows you to interact with the storesproducts's table"""
 
 from models.managers.manager import Manager
-from models.entities.store import Store
 
 
 class StoresProductsManager(Manager):
@@ -22,5 +21,3 @@ class StoresProductsManager(Manager):
         self.cursor.executemany(sql, storesproducts)
 
         self.connexion.commit()
-
-    
