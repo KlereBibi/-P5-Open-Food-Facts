@@ -1,8 +1,7 @@
 """this module allows you to interact with the categoriesproducts table"""
 
-import mysql.connector
 from models.managers.manager import Manager
-from models.entities.product import Product
+
 
 class CategoriesProductsManager(Manager):
 
@@ -11,18 +10,15 @@ class CategoriesProductsManager(Manager):
         -Manager (class parent): initializes the connection to the database """
 
     def save(self, tup_categoriesproducts):
-        
+
         """method to save data in the brandsproducts table
-        Args : 
+        Args:
         - categoriesproducts (liste) : tuple with id_products and id_categories
         """
 
-        sql = "INSERT INTO categories_products (id_products, id_categories) VALUES (%s, %s)"
+        sql = "INSERT INTO categories_products (id_products, id_categories) \
+               VALUES (%s, %s)"
 
         self.cursor.executemany(sql, tup_categoriesproducts)
 
         self.connexion.commit()
-
-     
-
-    

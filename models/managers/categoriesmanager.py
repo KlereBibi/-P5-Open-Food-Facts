@@ -1,6 +1,5 @@
 """this module allows you to interact with the categories's table"""
 
-import mysql.connector
 from models.managers.manager import Manager
 from models.entities.category import Category
 
@@ -14,13 +13,13 @@ class CategoriesManager(Manager):
     def save(self, categories):
 
         """method to save and retrieve data in the categories table
-        Args : 
+        Args:
         - categories (liste) : tuple of categories to save
-        
         returns:
-        - categories_saved (liste) : categories with id from database """
+        - categories_saved (liste) : categories with id from database."""
 
-        sql = "INSERT INTO categories (id, name) VALUES (%s, %s) ON DUPLICATE KEY UPDATE name=name"
+        sql = "INSERT INTO categories (id, name) \
+               VALUES (%s, %s) ON DUPLICATE KEY UPDATE name=name"
 
         self.cursor.executemany(sql, categories)
 
@@ -35,12 +34,12 @@ class CategoriesManager(Manager):
             name_categories.append(element[1])
 
         names = tuple(name_categories)
-        query= (
+        query = (
             "SELECT * FROM categories "
-            f"WHERE name IN ({', '.join('%s' for _ in names)})" 
+            f"WHERE name IN ({', '.join('%s' for _ in names)})"
         )
         self.cursor.execute(query, names)
-    
+
         categories_database = self.cursor.fetchall()
 
         categories_saved = []
@@ -57,7 +56,7 @@ class CategoriesManager(Manager):
         return : list of object categories"""
 
         sql = "SELECT * FROM categories "
-        
+
         self.cursor.execute(sql)
 
         categories = self.cursor.fetchall()

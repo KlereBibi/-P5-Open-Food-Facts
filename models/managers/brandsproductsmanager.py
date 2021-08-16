@@ -1,7 +1,6 @@
 """this module allows you to interact with the brandsproducts's table"""
 
 from models.managers.manager import Manager
-from models.entities.brand import Brand
 
 
 class BrandsProductsManager(Manager):
@@ -13,7 +12,7 @@ class BrandsProductsManager(Manager):
     def save(self, brandsproducts):
 
         """method to save data in the brandsproducts table
-        Args : 
+        Args:
         - brandsproducts (liste) : tuple with id_brands and id_products """
 
         sql = "INSERT INTO brands_products (id_products, id_brands)\
@@ -22,5 +21,3 @@ class BrandsProductsManager(Manager):
         self.cursor.executemany(sql, brandsproducts)
 
         self.connexion.commit()
-
-    
