@@ -42,6 +42,8 @@ class CategoriesManager(Manager):
 
         categories_database = self.cursor.fetchall()
 
+        self.cursor.close()
+
         categories_saved = []
         for element in categories_database:
             categories_saved.append(Category(element[1], element[0]))

@@ -21,3 +21,5 @@ class BrandsProductsManager(Manager):
         self.cursor.executemany(sql, brandsproducts)
 
         self.connexion.commit()
+
+        self.cursor.close()

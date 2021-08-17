@@ -140,6 +140,8 @@ class ProductsManager(Manager):
 
         products_database = self.cursor.fetchall()
 
+        self.cursor.close()
+
         products_save = []
 
         for element in products_database:
@@ -238,6 +240,7 @@ class ProductsManager(Manager):
                             {'id_categories': userchoice})
 
         products = self.cursor.fetchall()
+        self.cursor.close()
 
         products_saved = []
 

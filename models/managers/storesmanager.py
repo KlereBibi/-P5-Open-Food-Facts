@@ -42,7 +42,7 @@ class StoresManager(Manager):
         self.cursor.execute(query, names)
 
         stores_database = self.cursor.fetchall()
-
+        self.cursor.close()
         stores_save = []
         for element in stores_database:
             stores_save.append(Store(element[1], element[0]))

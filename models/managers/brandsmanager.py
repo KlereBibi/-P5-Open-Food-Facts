@@ -42,6 +42,8 @@ class BrandsManager(Manager):
 
         brands_database = self.cursor.fetchall()
 
+        self.cursor.close()
+
         brands_save = []
         for element in brands_database:
             brands_save.append(Brand(element[1], element[0]))

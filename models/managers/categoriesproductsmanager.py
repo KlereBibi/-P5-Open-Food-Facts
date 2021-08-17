@@ -22,3 +22,5 @@ class CategoriesProductsManager(Manager):
         self.cursor.executemany(sql, tup_categoriesproducts)
 
         self.connexion.commit()
+
+        self.cursor.close()

@@ -161,6 +161,7 @@ class SubstituteManager(Manager):
                             ON substitute.id_product_substitution = s.id")
 
         all_substitute = self.cursor.fetchall()
+        self.cursor.close()
 
         if all_substitute:
             substitute_database = []
