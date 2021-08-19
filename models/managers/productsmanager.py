@@ -11,6 +11,8 @@ from models.managers.brandsproductsmanager import BrandsProductsManager
 from models.managers.storesmanager import StoresManager
 from models.managers.categoriesmanager import CategoriesManager
 from models.managers.categoriesproductsmanager import CategoriesProductsManager
+from mysql import connector
+
 
 
 class ProductsManager(Manager):
@@ -113,33 +115,33 @@ class ProductsManager(Manager):
         - brands_save (liste) : products with id from database """
 
         products_tup = self.products_to_save(products)
-
+        
         sql = "INSERT INTO products (id, name, nutriscore, url) \
-                VALUES (%s, %s, %s, %s) \
-                ON DUPLICATE KEY UPDATE name = name"
+                    VALUES (%s, %s, %s, %s) \
+                    ON DUPLICATE KEY UPDATE name = name"
 
         self.cursor.executemany(sql, products_tup)
 
         self.connexion.commit()
+        #except connector.errors.DatabaseError:
 
         self.cursor.close()
 
         self.cursor = self.connexion.cursor()
 
-        name_product = []
+        names_products = []
         for element in products_tup:
-            name_product.append(element[1])
+            names_products.append(element[1])
 
-        names = tuple(name_product)
+        names = tuple(names_products)
 
-        query = (
+        query= (
             "SELECT * FROM products "
             f"WHERE name IN ({', '.join('%s' for _ in names)})"
-        )
+            )
         self.cursor.execute(query, names)
-
         products_database = self.cursor.fetchall()
-
+ 
         self.cursor.close()
 
         products_save = []

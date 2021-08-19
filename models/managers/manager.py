@@ -1,6 +1,6 @@
 """this module allows you to connectinteract with the database"""
 
-import mysql.connector
+from mysql import connector
 from os.path import join, dirname, abspath
 
 
@@ -12,11 +12,13 @@ class Manager:
 
         """constructor containing the accesses to the database"""
 
-        self.connexion = mysql.connector.connect(
+        self.connexion = connector.connect(
             host="localhost",
             user="root",
             password="184300",
-            database="off"
+            database="off",
+            use_unicode=True,
+            charset='utf8mb4'
         )
 
         self.cursor = self.connexion.cursor()
@@ -27,14 +29,24 @@ class Manager:
         Arg:
         file : file to read"""
 
-        self.cursor = self.connexion.cursor()
-
         database = join(dirname(dirname(abspath(__file__))), "settings", file)
 
         with open(database) as infile:
             sqlrequests = infile.read().split(';')
-            for sqlrequests in sqlrequests:
-                if sqlrequests.strip():
-                    self.cursor.execute(sqlrequests)
+        
+        self.whrite_database(sqlrequests)
 
-        self.cursor.close()
+        infile.close
+    
+    def whrite_database(self, sqlrequests):
+
+        for line in sqlrequests:
+            if line.strip():
+                cursor = self.connexion.cursor()
+                cursor.execute(line)
+                cursor.close()
+                
+        
+    
+
+        

@@ -47,18 +47,21 @@ class ApiManager(Manager):
                     "&tagtype_0=categories&tag_contains_0=contains&"
                     "tag_0={}&page_size=1&json=1".format(element))
             result = json.loads(products_find.text)
-            products_saved.append(result['products'][:10])
+            products_saved += result['products']
 
-        for element in products_saved:
-            for item in element:
-                newprod = \
-                    Product(item['product_name_fr'],
-                            item['nutriscore_grade'],
-                            item['categories'],
-                            item['url'],
-                            item['brands'],
-                            item['stores'])
+        for item in products_saved:
+            try:
+                newprod = Product(
+                    item['product_name_fr'],
+                    item['nutriscore_grade'],
+                    item['categories'],
+                    item['url'],
+                    item['brands'],
+                    item['stores']
+                    )
                 products.append(newprod)
+            except KeyError:
+                continue
 
         return products
 

@@ -129,7 +129,7 @@ CREATE TABLE `products` (
   `url` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1108 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1108 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `stores` (
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1272 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1272 DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +179,7 @@ CREATE TABLE `stores_products` (
   KEY `stores_name_fk` (`id_stores`),
   CONSTRAINT `products_name_fk` FOREIGN KEY (`id_products`) REFERENCES `products` (`id`),
   CONSTRAINT `stores_name_fk` FOREIGN KEY (`id_stores`) REFERENCES `stores` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +206,7 @@ CREATE TABLE `substitute` (
   UNIQUE KEY `id_product_origin` (`id_product_origin`),
   CONSTRAINT `fk_product_origin` FOREIGN KEY (`id_product_origin`) REFERENCES `products` (`id`),
   CONSTRAINT `fk_product_substitution` FOREIGN KEY (`id_product_substitution`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
