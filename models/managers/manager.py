@@ -33,19 +33,13 @@ class Manager:
 
         with open(database) as infile:
             sqlrequests = infile.read().split(';')
+            for line in sqlrequests:
+                if line.strip():
+                    cursor = self.connexion.cursor()
+                    cursor.execute(line)
+                    cursor.close()
+                    print(line)
         
-        self.whrite_database(sqlrequests)
-
-        infile.close
-    
-    def whrite_database(self, sqlrequests):
-
-        for line in sqlrequests:
-            if line.strip():
-                cursor = self.connexion.cursor()
-                cursor.execute(line)
-                cursor.close()
-                
         
     
 

@@ -7,7 +7,7 @@ from models.managers.manager import Manager
 from models.managers.productsmanager import ProductsManager
 
 
-class ApiManager(Manager):
+class ApiManager():
 
     """Class used to query the API, retrieve data,
     process it and send it to the product manager."""
