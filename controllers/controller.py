@@ -25,16 +25,27 @@ class Controller:
         """initialization in variables of the different
         classes activated by the controller"""
 
-        self.apimanager = ApiManager()
         self.datamanager = DataManager()
-        self.message = Display()
+        self.display = Display()
         self.menu = Menu()
-        self.categoriesmanager = CategoriesManager()
-        self.categoriesproductsmanager = CategoriesProductsManager()
-        self.productsmanager = ProductsManager()
         self.substitutemanager = SubstituteManager()
-        self.brandsproductsmanager = BrandsProductsManager()
-        self.storesproductsmanager = StoresProductsManager()
+        #self.categoriesproductsmanager = CategoriesProductsManager()
+        
+        
+        #self.brandsproductsmanager = BrandsProductsManager()
+        #self.storesproductsmanager = StoresProductsManager()
+
+    def chek_database(self):
+
+        """method allowing to know by launching 
+        the script if the database is empty"""
+
+        database_empty = self.datamanager.search_tables()
+        if database_empty:
+            self.display.database_empty()
+            self.reboot_database()
+        else:
+            self.ask_user()
 
     def ask_user(self):
 
@@ -49,10 +60,10 @@ class Controller:
 
                 all_substitute = self.substitutemanager.all_substitute()
                 if all_substitute:
-                    self.message.all_substitute(all_substitute)
+                    self.display.all_substitute(all_substitute)
                     self.ask_user()
                 else:
-                    self.message.no_substitut_database()
+                    self.display.no_substitut_database()
                     self.ask_user()
 
             if answer == "2":
@@ -68,7 +79,7 @@ class Controller:
 
         else:
 
-            self.message.retry()
+            self.display.retry()
 
             self.ask_user()
 
@@ -77,20 +88,21 @@ class Controller:
         """method calling another manager method allowing
         to reinitialize the information contained in the database
         by deleting the tables and their contents then by recreating them."""
-
+        apimanager = ApiManager()
         self.datamanager.delete_tables()
-        self.message.delete_tables()
+        self.display.delete_tables()
         name_bdd = self.menu.name_database()
-        self.message.wait()
-        self.apimanager.save_data()
-        self.message.finish(name_bdd)
+        self.display.wait()
+        apimanager.save_data()
+        self.display.finish(name_bdd)
         self.ask_user()
 
     def choice_categories(self):
 
         """method offering the user several choices of categories"""
 
-        categories = self.categoriesmanager.search_categories()
+        categoriesmanager = CategoriesManager()
+        categories = categoriesmanager.search_categories()
 
         user_category = self.menu.generic_choice(categories)
 
@@ -107,11 +119,11 @@ class Controller:
 
                 else:
 
-                    self.message.retry()
+                    self.display.retry()
                     self.choice_categories()
 
             except ValueError:
-                self.message.error_letters()
+                self.display.error_letters()
                 self.choice_categories()
 
         else:
@@ -123,7 +135,8 @@ class Controller:
         """method calling other methods to offer the user several choices
         of products in the selected categories"""
 
-        products = self.productsmanager.search_products(user_category)
+        productsmanager = ProductsManager()
+        products = productsmanager.search_products(user_category)
         user_product = self.menu.generic_choice(products)
 
         for element in products:
@@ -140,16 +153,16 @@ class Controller:
                 if selected_products:
 
                     self.substitute(product)
-                    self.message.saved()
+                    self.display.saved()
                     self.ask_user()
 
                 else:
 
-                    self.message.retry()
+                    self.display.retry()
                     self.choice_product(user_category)
 
             except ValueError:
-                self.message.error_letters()
+                self.display.error_letters()
                 self.choice_product(user_category)
 
         else:
@@ -161,17 +174,18 @@ class Controller:
         """method calling other methods to find
         the substitute corresponding to the selected product"""
 
+       
         substitute = self.substitutemanager.search_substitut(product)
 
         if substitute:
-            self.message.substitute_ok(substitute)
+            self.display.substitute_ok(substitute)
             userchoice = self.menu.saved_substitute()
 
             if userchoice == "o":
                 o_substitute = Substitute(product.id, substitute.id)
                 self.substitutemanager.saved_substitut(o_substitute)
-                self.message.saved()
-                self.message.return_main()
+                self.display.saved()
+                self.display.return_main()
                 self.ask_user()
             if userchoice == "n":
                 self.ask_user()
@@ -179,5 +193,5 @@ class Controller:
                 self.ask_user()
 
         else:
-            self.message.no_substitut()
+            self.display.no_substitut()
             self.ask_user()

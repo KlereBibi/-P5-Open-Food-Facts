@@ -18,16 +18,15 @@ class StoresManager(Manager):
         returns:
         - stores_save (liste) : stores with id from database """
 
+        cursor = self.connexion.cursor()
+
         sql = "INSERT INTO stores (id, name) \
             VALUES (%s, %s) ON DUPLICATE KEY UPDATE name=name"
 
-        self.cursor.executemany(sql, stores)
+        cursor.executemany(sql, stores)
+        super().end_request(cursor)
 
-        self.connexion.commit()
-
-        self.cursor.close()
-
-        self.cursor = self.connexion.cursor()
+        cursor = self.connexion.cursor()
 
         name_stores = []
         for element in stores:
@@ -39,10 +38,10 @@ class StoresManager(Manager):
             f"WHERE name IN \
                 ({', '.join('%s' for _ in names)})"
         )
-        self.cursor.execute(query, names)
+        cursor.execute(query, names)
+        stores_database = cursor.fetchall()
+        super().end_request(cursor)
 
-        stores_database = self.cursor.fetchall()
-        self.cursor.close()
         stores_save = []
         for element in stores_database:
             stores_save.append(Store(element[1], element[0]))

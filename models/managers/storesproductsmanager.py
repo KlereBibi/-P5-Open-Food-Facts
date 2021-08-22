@@ -15,10 +15,11 @@ class StoresProductsManager(Manager):
         Args:
         - storesproducts (liste) : tuple with id_products and id_stores"""
 
+        cursor = self.connexion.cursor()
+
         sql = "INSERT INTO stores_products (id_products, id_stores)\
              VALUES (%s, %s)"
 
-        self.cursor.executemany(sql, storesproducts)
+        cursor.executemany(sql, storesproducts)
 
-        self.connexion.commit()
-        self.cursor.close()
+        super().end_request(cursor)

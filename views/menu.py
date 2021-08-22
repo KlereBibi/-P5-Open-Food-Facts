@@ -32,7 +32,7 @@ class Menu:
         """method requesting the name of the player's database.
         return:(str) the choice user for the database's name """
 
-        userchoice = input("Merci d'inscrire le nom"
+        userchoice = input("Merci d'inscrire le nom "
                            "de votre base de donnée:\n")
 
         return userchoice

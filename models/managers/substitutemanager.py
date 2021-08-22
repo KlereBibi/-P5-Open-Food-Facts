@@ -25,10 +25,8 @@ class SubstituteManager(Manager):
         product_substitute (product object): returns the product
         with a better nutriscore and the maximum of category.
         False: if the result of the query is empty"""
-        #object dans les commentaires?
-
-        self.cursor = self.connexion.cursor()
-        self.cursor.execute("SELECT \
+        cursor = self.connexion.cursor()
+        cursor.execute("SELECT \
             ok.id, ok.name, ok.nutriscore, ok.url, b.name, s.name \
             FROM \
                 (SELECT DISTINCT p.id, p.name, p.nutriscore, p.url, \
@@ -103,7 +101,8 @@ class SubstituteManager(Manager):
                             {'id_products': product.id,
                              'nutriscore': product.nutriscore})
 
-        substitut = self.cursor.fetchall()
+        substitut = cursor.fetchall()
+        super().end_request(cursor)
 
         if substitut:#est ce que je dois spliter en une 2e méthode?
             product_substitute = None
@@ -131,8 +130,8 @@ class SubstituteManager(Manager):
         the substitute corresponding to the requested product
         Args:
         - o_substitut(object): contains id product and substitut"""
-        #vérifier object
-
+        
+        cursor = self.connexion.cursor()
         tup_substitute = (o_substitute.id_products_origin,
                           o_substitute.id_product_substitution)
 
@@ -141,9 +140,8 @@ class SubstituteManager(Manager):
             ON DUPLICATE \
             KEY UPDATE id_product_origin=id_product_origin"
 
-        self.cursor.execute(sql, tup_substitute)
-        self.connexion.commit()
-        self.cursor.close()
+        cursor.execute(sql, tup_substitute)
+        super().end_request(cursor)
 
     def all_substitute(self):
 
@@ -151,17 +149,17 @@ class SubstituteManager(Manager):
         return:
         substitute_database(liste): product and substitut in database
         False(condition): if no element in the request"""
-
-        self.cursor = self.connexion.cursor()
-        self.cursor.execute("SELECT p.id, p.name, s.id, s.name \
+        
+        cursor = self.connexion.cursor()
+        cursor.execute("SELECT p.id, p.name, s.id, s.name \
                             FROM substitute \
                             INNER JOIN products as p \
                             ON substitute.id_product_origin = p.id \
                             INNER JOIN Products as s \
                             ON substitute.id_product_substitution = s.id")
-
-        all_substitute = self.cursor.fetchall()
-        self.cursor.close()
+        #self.cursor.execute("SELECT * FROM substitute")
+        all_substitute = cursor.fetchall()
+        super().end_request(cursor)
 
         if all_substitute:
             substitute_database = []

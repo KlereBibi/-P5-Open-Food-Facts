@@ -112,3 +112,10 @@ class Display:
         """method showing that the substitute table is empty"""
 
         print("La table des substituts est vide.")
+
+    def database_empty(self):
+
+        """method explaining that the table is empty and that the reset is expected"""
+
+        print("Bonjour, nous constatons que la base de donnée est vide. "
+              "Nous allons procéder à la réintialisation de la base de donnée.")

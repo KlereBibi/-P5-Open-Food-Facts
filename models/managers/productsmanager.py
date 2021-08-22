@@ -114,20 +114,18 @@ class ProductsManager(Manager):
         returns:
         - brands_save (liste) : products with id from database """
 
+        cursor = self.connexion.cursor()
         products_tup = self.products_to_save(products)
         
         sql = "INSERT INTO products (id, name, nutriscore, url) \
                     VALUES (%s, %s, %s, %s) \
                     ON DUPLICATE KEY UPDATE name = name"
 
-        self.cursor.executemany(sql, products_tup)
+        cursor.executemany(sql, products_tup)
+        super().end_request(cursor)
 
-        self.connexion.commit()
-        #except connector.errors.DatabaseError:
 
-        self.cursor.close()
-
-        self.cursor = self.connexion.cursor()
+        cursor = self.connexion.cursor()
 
         names_products = []
         for element in products_tup:
@@ -139,10 +137,9 @@ class ProductsManager(Manager):
             "SELECT * FROM products "
             f"WHERE name IN ({', '.join('%s' for _ in names)})"
             )
-        self.cursor.execute(query, names)
-        products_database = self.cursor.fetchall()
- 
-        self.cursor.close()
+        cursor.execute(query, names)
+        products_database = cursor.fetchall()
+        super().end_request(cursor)
 
         products_save = []
 
@@ -229,10 +226,10 @@ class ProductsManager(Manager):
         to find the products present in the categories
         selected by the user.
         returns (liste): bjects products """
+        
+        cursor = self.connexion.cursor()
 
-        self.cursor = self.connexion.cursor()
-
-        self.cursor.execute("SELECT p.id, p.name, p.nutriscore \
+        cursor.execute("SELECT p.id, p.name, p.nutriscore \
                              FROM products as p \
                              INNER JOIN categories_products as cp \
                              ON p.id = cp.id_products \
@@ -241,8 +238,8 @@ class ProductsManager(Manager):
                              WHERE c.id =%(id_categories)s",
                             {'id_categories': userchoice})
 
-        products = self.cursor.fetchall()
-        self.cursor.close()
+        products = cursor.fetchall()
+        super().end_request(cursor)
 
         products_saved = []
 

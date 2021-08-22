@@ -2,6 +2,7 @@
 """module to delete and creat tables in database """
 
 from models.managers.manager import Manager
+import string
 
 
 class DataManager(Manager):
@@ -25,3 +26,37 @@ class DataManager(Manager):
         by reading a file containing sql commands."""
 
         super().read_command_sql("sauvegarde.sql")
+
+    def search_tables(self):
+
+        """method allowing to know if the database contains tables 
+        and if these tables contain elements
+        return database_empty(bol): 
+            True (condition if not table or element) 
+            or False(if database have table and element in table) """
+
+        cursor = self.connexion.cursor()
+        sql = "SHOW TABLES;"
+        cursor.execute(sql)
+        tables = cursor.fetchall()
+        super().end_request(cursor)
+
+        database_empty = False
+        if len(tables) == 8:
+            for element in tables:
+                element = ''.join([i for i in element if i not in string.punctuation])
+                if element != "substitute":
+                    cursor = self.connexion.cursor()
+                    cursor.execute("SELECT count(*) FROM {}".format(element))#à rectifier
+                    result = cursor.fetchall()
+                    self.end_request(cursor)
+                    result = ''.join([i for i in str(result[0]) if i not in string.punctuation])
+                    if int(result[0]) != 0:
+                        continue
+                    else:
+                        database_empty = True
+        else:
+            database_empty = True
+
+        return database_empty
+        

@@ -17,17 +17,23 @@ class BrandsManager(Manager):
         - brands (liste) : tuple of brands to save
         returns:
         - brands_save (liste) : brands with id from database."""
+        self.connexion.reconnect()
 
+        cursor = self.connexion.cursor()
         sql = "INSERT INTO brands (id, name) \
                VALUES (%s, %s) ON DUPLICATE KEY UPDATE name=name"
 
-        self.cursor.executemany(sql, brands)
+        cursor.executemany(sql, brands)
 
         self.connexion.commit()
 
-        self.cursor.close()
+        cursor.close()
 
-        self.cursor = self.connexion.cursor()
+        self.connexion.close()
+
+        self.connexion.reconnect()
+
+        cursor = self.connexion.cursor()
 
         name_brands = []
         for element in brands:
@@ -38,11 +44,12 @@ class BrandsManager(Manager):
             "SELECT * FROM brands "
             f"WHERE name IN ({', '.join('%s' for _ in names)})"
         )
-        self.cursor.execute(query, names)
+        cursor.execute(query, names)
 
-        brands_database = self.cursor.fetchall()
-
-        self.cursor.close()
+        brands_database = cursor.fetchall()
+        self.connexion.commit()
+        cursor.close()
+        self.connexion.close()
 
         brands_save = []
         for element in brands_database:

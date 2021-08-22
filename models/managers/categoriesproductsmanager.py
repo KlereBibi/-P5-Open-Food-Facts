@@ -16,11 +16,10 @@ class CategoriesProductsManager(Manager):
         - categoriesproducts (liste) : tuple with id_products and id_categories
         """
 
+        cursor = self.connexion.cursor()
         sql = "INSERT INTO categories_products (id_products, id_categories) \
                VALUES (%s, %s)"
 
-        self.cursor.executemany(sql, tup_categoriesproducts)
+        cursor.executemany(sql, tup_categoriesproducts)
 
-        self.connexion.commit()
-
-        self.cursor.close()
+        super().end_request(cursor)
