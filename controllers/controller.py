@@ -29,11 +29,6 @@ class Controller:
         self.display = Display()
         self.menu = Menu()
         self.substitutemanager = SubstituteManager()
-        #self.categoriesproductsmanager = CategoriesProductsManager()
-        
-        
-        #self.brandsproductsmanager = BrandsProductsManager()
-        #self.storesproductsmanager = StoresProductsManager()
 
     def chek_database(self):
 
@@ -88,6 +83,7 @@ class Controller:
         """method calling another manager method allowing
         to reinitialize the information contained in the database
         by deleting the tables and their contents then by recreating them."""
+        
         apimanager = ApiManager()
         self.datamanager.delete_tables()
         self.display.delete_tables()
