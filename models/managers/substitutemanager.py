@@ -25,6 +25,7 @@ class SubstituteManager(Manager):
         product_substitute (product object): returns the product
         with a better nutriscore and the maximum of category.
         False: if the result of the query is empty"""
+
         cursor = self.connexion.cursor()
         cursor.execute("SELECT \
             ok.id, ok.name, ok.nutriscore, ok.url, b.name, s.name \
@@ -98,13 +99,13 @@ class SubstituteManager(Manager):
                         GROUP BY cp.id_products \
                         ORDER by nutriscore  ASC) as o ) \
                 AND ok.nutriscore <  'd' LIMIT 1);",
-                            {'id_products': product.id,
-                             'nutriscore': product.nutriscore})
+                       {'id_products': product.id,
+                        'nutriscore': product.nutriscore})
 
         substitut = cursor.fetchall()
         super().end_request(cursor)
 
-        if substitut:#est ce que je dois spliter en une 2e méthode?
+        if substitut:
             product_substitute = None
             for element in substitut:
                 if product_substitute is None:
@@ -114,8 +115,8 @@ class SubstituteManager(Manager):
                                 element[0])
                 else:
                     store_list = []
-                    for store in product_substitute.stores:#voir pour mieux
-                        store_list.append(store.name) #pareil pour brands
+                    for store in product_substitute.stores:
+                        store_list.append(store.name)
                     if element[5] not in store_list:
                         product_substitute.stores.append(Store(element[5],
                                                                None))
@@ -130,7 +131,7 @@ class SubstituteManager(Manager):
         the substitute corresponding to the requested product
         Args:
         - o_substitut(object): contains id product and substitut"""
-        
+
         cursor = self.connexion.cursor()
         tup_substitute = (o_substitute.id_products_origin,
                           o_substitute.id_product_substitution)
@@ -149,7 +150,7 @@ class SubstituteManager(Manager):
         return:
         substitute_database(liste): product and substitut in database
         False(condition): if no element in the request"""
-        
+
         cursor = self.connexion.cursor()
         cursor.execute("SELECT p.id, p.name, s.id, s.name \
                             FROM substitute \
@@ -157,7 +158,7 @@ class SubstituteManager(Manager):
                             ON substitute.id_product_origin = p.id \
                             INNER JOIN Products as s \
                             ON substitute.id_product_substitution = s.id")
-        #self.cursor.execute("SELECT * FROM substitute")
+
         all_substitute = cursor.fetchall()
         super().end_request(cursor)
 

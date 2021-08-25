@@ -11,8 +11,6 @@ from models.managers.brandsproductsmanager import BrandsProductsManager
 from models.managers.storesmanager import StoresManager
 from models.managers.categoriesmanager import CategoriesManager
 from models.managers.categoriesproductsmanager import CategoriesProductsManager
-from mysql import connector
-
 
 
 class ProductsManager(Manager):
@@ -116,14 +114,13 @@ class ProductsManager(Manager):
 
         cursor = self.connexion.cursor()
         products_tup = self.products_to_save(products)
-        
+
         sql = "INSERT INTO products (id, name, nutriscore, url) \
                     VALUES (%s, %s, %s, %s) \
                     ON DUPLICATE KEY UPDATE name = name"
 
         cursor.executemany(sql, products_tup)
         super().end_request(cursor)
-
 
         cursor = self.connexion.cursor()
 
@@ -133,7 +130,7 @@ class ProductsManager(Manager):
 
         names = tuple(names_products)
 
-        query= (
+        query = (
             "SELECT * FROM products "
             f"WHERE name IN ({', '.join('%s' for _ in names)})"
             )
@@ -226,7 +223,7 @@ class ProductsManager(Manager):
         to find the products present in the categories
         selected by the user.
         returns (liste): bjects products """
-        
+
         cursor = self.connexion.cursor()
 
         cursor.execute("SELECT p.id, p.name, p.nutriscore \
@@ -236,7 +233,7 @@ class ProductsManager(Manager):
                              INNER JOIN categories as c \
                              ON c.id = cp.id_categories \
                              WHERE c.id =%(id_categories)s",
-                            {'id_categories': userchoice})
+                       {'id_categories': userchoice})
 
         products = cursor.fetchall()
         super().end_request(cursor)

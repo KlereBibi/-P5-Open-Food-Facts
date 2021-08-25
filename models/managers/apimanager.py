@@ -3,7 +3,6 @@
 import requests
 import json
 from models.entities.product import Product
-from models.managers.manager import Manager
 from models.managers.productsmanager import ProductsManager
 
 

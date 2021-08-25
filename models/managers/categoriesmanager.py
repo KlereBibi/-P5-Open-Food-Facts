@@ -46,7 +46,6 @@ class CategoriesManager(Manager):
 
         return categories_saved
 
-        
     def search_categories(self):
 
         """method allowing to retrieve the categories present in the database
@@ -60,10 +59,8 @@ class CategoriesManager(Manager):
         super().end_request(cursor)
 
         categories_saved = []
-        
+
         for element in categories:
             categories_saved.append(Category(element[1], element[0]))
 
         return categories_saved
-
-        

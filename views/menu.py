@@ -17,25 +17,16 @@ class Menu:
         userchoice = input("Veuillez faire votre choix :\n \
             1/ voir mes favoris\n \
             2/ rechercher un substitut\n \
-            3/ réinitilisation de la base de donnée\n \
-                Note: Pour revenir au menu principal appuyer sur q\n")
+            3/ Souhaitez vous réinitialiser la base de donnée ?\n \
+                Note: A tout moment, pour revenir au "
+                           "menu principal appuyer sur q\n").lower()
 
         possibility = ("1", "2", "3", "q")
 
-        if userchoice in possibility:
-            return userchoice
+        if userchoice.lower() in possibility:
+            return userchoice.lower()
         else:
             return False
-
-    def name_database(self):
-
-        """method requesting the name of the player's database.
-        return:(str) the choice user for the database's name """
-
-        userchoice = input("Merci d'inscrire le nom "
-                           "de votre base de donnée:\n")
-
-        return userchoice
 
     def generic_choice(self, liste):
 
@@ -55,12 +46,12 @@ class Menu:
         for element in liste:
             print(element.id, ":", element.name)
 
-        userchoice = input("")
+        userchoice = input("").lower()
 
-        if userchoice == "q":
+        if userchoice.lower() == "q":
             return False
         else:
-            return userchoice
+            return userchoice.lower()
 
     def saved_substitute(self):
 
@@ -71,12 +62,12 @@ class Menu:
         return str or False """
 
         userchoice = input("Souhaitez vous enregistrer le résultat de votre recherche? \n \
-        Pour oui tappez o pour non tappez n\n ")
+        Pour oui tappez o pour non tappez n\n ").lower()
 
         possibility = ("o", "n", "q")
 
-        if userchoice in possibility:
-            return userchoice
+        if userchoice.lower() in possibility:
+            return userchoice.lower()
         else:
             display = Display()
             display.retry()

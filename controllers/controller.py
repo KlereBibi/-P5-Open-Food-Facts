@@ -1,6 +1,5 @@
 """module leading code coordination"""
 
-
 from views.menu import Menu
 from views.display import Display
 from models.entities.substitute import Substitute
@@ -9,9 +8,6 @@ from models.managers.datamanager import DataManager
 from models.managers.productsmanager import ProductsManager
 from models.managers.categoriesmanager import CategoriesManager
 from models.managers.substitutemanager import SubstituteManager
-from models.managers.brandsproductsmanager import BrandsProductsManager
-from models.managers.storesproductsmanager import StoresProductsManager
-from models.managers.categoriesproductsmanager import CategoriesProductsManager
 
 
 class Controller:
@@ -32,13 +28,14 @@ class Controller:
 
     def chek_database(self):
 
-        """method allowing to know by launching 
+        """method allowing to know by launching
         the script if the database is empty"""
 
         database_empty = self.datamanager.search_tables()
         if database_empty:
             self.display.database_empty()
             self.reboot_database()
+            self.ask_user()
         else:
             self.ask_user()
 
@@ -65,17 +62,13 @@ class Controller:
                 self.choice_categories()
 
             if answer == "3":
-
                 self.reboot_database()
 
             if answer == "q":
-
                 self.ask_user()
 
         else:
-
             self.display.retry()
-
             self.ask_user()
 
     def reboot_database(self):
@@ -83,14 +76,13 @@ class Controller:
         """method calling another manager method allowing
         to reinitialize the information contained in the database
         by deleting the tables and their contents then by recreating them."""
-        
+
         apimanager = ApiManager()
         self.datamanager.delete_tables()
         self.display.delete_tables()
-        name_bdd = self.menu.name_database()
         self.display.wait()
         apimanager.save_data()
-        self.display.finish(name_bdd)
+        self.display.finish()
         self.ask_user()
 
     def choice_categories(self):
@@ -105,19 +97,13 @@ class Controller:
         if user_category:
 
             try:
-
                 selected_categories = [categorie for categorie in categories
                                        if categorie.id == int(user_category)]
-
                 if selected_categories:
-
                     self.choice_product(user_category)
-
                 else:
-
                     self.display.retry()
                     self.choice_categories()
-
             except ValueError:
                 self.display.error_letters()
                 self.choice_categories()
@@ -142,25 +128,18 @@ class Controller:
         if user_product:
 
             try:
-
                 selected_products = [product for product in products
                                      if product.id == int(user_product)]
-
                 if selected_products:
-
                     self.substitute(product)
                     self.display.saved()
                     self.ask_user()
-
                 else:
-
                     self.display.retry()
                     self.choice_product(user_category)
-
             except ValueError:
                 self.display.error_letters()
                 self.choice_product(user_category)
-
         else:
 
             self.ask_user()
@@ -170,7 +149,6 @@ class Controller:
         """method calling other methods to find
         the substitute corresponding to the selected product"""
 
-       
         substitute = self.substitutemanager.search_substitut(product)
 
         if substitute:

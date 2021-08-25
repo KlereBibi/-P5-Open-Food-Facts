@@ -18,19 +18,17 @@ class Display:
         """method explaining to the user to wait
             while the database is being filled"""
 
-        print("Votre choix a été enregistré. "
-              "Le traitement des informations peut prendre quelques minutes, "
+        print("Le traitement des informations peut prendre quelques minutes, "
               "merci de patienter")
 
-    def finish(self, name_database):
+    def finish(self):
 
         """method explaining that the database reset process is complete,
             giving the database entry name entered by the player previously
         arg:
         name_database(str):name given to the database previously by the user"""
 
-        print("La nouvelle base de donnée {} a été "
-              "crée et complétée".format(name_database))
+        print("La base de donnée a été crée et complétée")
 
     def retry(self):
 
@@ -42,8 +40,8 @@ class Display:
     def error_letters(self):
 
         """method displaying an error message,
-             in particular during a false entry during an input,
-                and that letters have been inscribed in place of a number"""
+            in particular during a false entry during an input,
+            and that letters have been inscribed in place of a number"""
 
         print("La saisie est incorrect, "
               "veuillez recommencer et saisir des chiffres")
@@ -57,7 +55,7 @@ class Display:
         args:
         - substitute(class Product):containing the name of the substitute,
         a list of store objects, a brands object and the url
-        corresponding to OpenFoodFact"""  #a confirmé
+        corresponding to OpenFoodFact"""
 
         print("Le substitut trouvé est {} de la marque {} que vous "
               "pouvez trouver "
@@ -77,8 +75,8 @@ class Display:
 
         """method displaying the non possibility of finding a substitute"""
 
-        print("Désolé nous n'avons pas trouvé "
-              "de substitut correspondant à la demande")
+        print("Désolé nous n'avons pas trouvé de "
+              "substitut correspondant à la demande.")
 
     def saved(self):
 
@@ -115,7 +113,10 @@ class Display:
 
     def database_empty(self):
 
-        """method explaining that the table is empty and that the reset is expected"""
+        """method explaining that the table
+        is empty and that the reset is expected"""
 
-        print("Bonjour, nous constatons que la base de donnée est vide. "
-              "Nous allons procéder à la réintialisation de la base de donnée.")
+        print("Bonjour, nous constatons"
+              "que la base de donnée est vide. "
+              "Nous allons procéder à la réintialisation"
+              "de la base de donnée.")

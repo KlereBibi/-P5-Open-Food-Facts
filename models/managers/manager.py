@@ -2,6 +2,7 @@
 
 from mysql import connector
 from os.path import join, dirname, abspath
+from models.settings.setting import HOST, USER, PASSWORD, DATABASE
 
 
 class Manager:
@@ -13,15 +14,13 @@ class Manager:
         """constructor containing the accesses to the database"""
 
         self.connexion = connector.connect(
-            host="localhost",
-            user="root",
-            password="184300",
-            database="off",
+            host=HOST,
+            user=USER,
+            password=PASSWORD,
+            database=DATABASE,
             use_unicode=True,
             charset='utf8mb4'
         )
-        #self.connexion.reconnect()
-        #self.cursor = self.connexion.cursor()
 
     def read_command_sql(self, read_file):
 
@@ -43,9 +42,3 @@ class Manager:
 
         self.connexion.commit()
         cursor.close()
-        
-        
-        
-    
-
-        
