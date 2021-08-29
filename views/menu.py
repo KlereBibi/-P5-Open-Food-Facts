@@ -4,8 +4,7 @@ from views.display import Display
 
 class Menu:
 
-    """Class menu to offer the different choices to the player.
-    """
+    """Class menu to offer the different choices to the player."""
 
     def main_user(self):
 
@@ -14,14 +13,15 @@ class Menu:
         one of the expected choices.
         return: str or False  """
 
-        userchoice = input("Veuillez faire votre choix :\n \
-            1/ voir mes favoris\n \
-            2/ rechercher un substitut\n \
-            3/ Souhaitez vous réinitialiser la base de donnée ?\n \
+        userchoice = input("Veuillez faire votre choix: \n \
+            1/ Voir mes favoris\n \
+            2/ Rechercher un substitut\n \
+            3/ Réinitialiser la base de donnée \n \
+            4/ Quitter le programme \n \
                 Note: A tout moment, pour revenir au "
                            "menu principal appuyer sur q\n").lower()
 
-        possibility = ("1", "2", "3", "q")
+        possibility = ("1", "2", "3", "4", "q")
 
         if userchoice.lower() in possibility:
             return userchoice.lower()

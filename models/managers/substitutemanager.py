@@ -146,11 +146,6 @@ class SubstituteManager(Manager):
 
     def all_substitute(self):
 
-        """method requesting all the elements present in the substitute table.
-        return:
-        substitute_database(liste): product and substitut in database
-        False(condition): if no element in the request"""
-
         cursor = self.connexion.cursor()
         cursor.execute("SELECT p.id, p.name, s.id, s.name \
                             FROM substitute \

@@ -3,6 +3,6 @@
  connection to the database to be able to easily change them"""
 
 HOST = "localhost"
-USER ="root"
-PASSWORD="184300"
-DATABASE ="off"
+USER = "root"
+PASSWORD = "184300"
+DATABASE = "off"

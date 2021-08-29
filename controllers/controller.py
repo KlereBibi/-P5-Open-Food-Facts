@@ -64,6 +64,9 @@ class Controller:
             if answer == "3":
                 self.reboot_database()
 
+            if answer == "4":
+                exit()
+
             if answer == "q":
                 self.ask_user()
 
