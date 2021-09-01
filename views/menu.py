@@ -40,13 +40,11 @@ class Menu:
         -message (list): contains the list of objects to select
         return: (str or False) choice utilisateur or False."""
 
-        print("Veuillez faire votre choix"
-              "et inscrire le numéro correpondant: ")
-
         for element in liste:
             print(element.id, ":", element.name)
 
-        userchoice = input("").lower()
+        userchoice = input("Veuillez faire votre choix "
+                           "et inscrire le numéro correpondant: ").lower()
 
         if userchoice.lower() == "q":
             return False
